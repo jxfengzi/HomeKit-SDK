@@ -1,5 +1,3 @@
-# HomeKit SDK Samples
-
-HomeKit Accessory SDK Samples
+# HomeKit SDK
 
 jxfengzi@gmail.com
