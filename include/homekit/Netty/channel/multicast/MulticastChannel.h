@@ -25,7 +25,7 @@ TINY_BEGIN_DECLS
 
 
 Channel * MulticastChannel_New(void);
-TinyRet MulticastChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
+void MulticastChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
 TinyRet MulticastChannel_Join(Channel *thiz, const char *ip, const char *group, uint16_t port);
 TinyRet MulticastChannel_Write(Channel *thiz, const void *data, uint32_t len);
 TinyRet MulticastChannel_WriteTo(Channel *thiz, const void *data, uint32_t len, const void *to, uint32_t to_len);

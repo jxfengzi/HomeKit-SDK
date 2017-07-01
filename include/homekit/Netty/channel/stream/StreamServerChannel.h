@@ -25,7 +25,7 @@ TINY_BEGIN_DECLS
 
 Channel * StreamServerChannel_New(int maxConnections);
 
-TinyRet StreamServerChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
+void StreamServerChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
 TinyRet StreamServerChannel_Bind(Channel *thiz, uint16_t port);
 
 

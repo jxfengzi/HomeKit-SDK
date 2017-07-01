@@ -17,7 +17,7 @@
 #include "ExampleHandler.h"
 
 #include <espressif/c_types.h>
-
+#include <lwip/lwip/sockets.h>
 
 ICACHE_FLASH_ATTR
 static TinyRet ExampleHandler_Construct(ChannelHandler *thiz);
@@ -99,10 +99,17 @@ ICACHE_FLASH_ATTR
 static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, void *data, uint32_t len)
 {
     HttpMessage *request = (HttpMessage *)data;
-    HttpMessage response;
+    // HttpMessage response;
 
-    printf("_channelRead: %d\n", request->content_length);
+    printf("_channelRead: %s %s\n", request->request_line.method, request->request_line.uri);
+    printf("write response to: %s:%d\n", channel->remote.socket.ip, channel->remote.socket.address);
+    // const char * resp = "HTTP/1.1 200 OK\r\nContent-Type: text/json\r\nContent-Length: 0\r\n\r\n";
+    const char * resp = "HTTP/1.1 200 OK\r\nContent-Type: text/json\r\nContent-Length: 0\r\n\r\n";
+//    SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, resp, strlen(resp));
+    lwip_send(channel->fd, resp, strlen(resp), 0);
+    Channel_Close(channel);
 
+#if 0
     if (RET_SUCCEEDED(HttpMessage_Construct(&response)))
     {
         response.type = HTTP_RESPONSE;
@@ -116,6 +123,7 @@ static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType
         Channel_Close(channel);
         HttpMessage_Dispose(&response);
     }
+#endif
 
     return true;
 }
