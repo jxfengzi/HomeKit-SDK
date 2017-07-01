@@ -7,7 +7,7 @@
 
 static void print_version_info(void)
 {
-    printf("Lightbulb demonstrations (Portable HomeKit Implementations)\n");
+    printf("HomeKit Lightbulb\n");
     printf("Version 0.1\n");
     printf("Author: ouyang\n");
     printf("Wechat: 178915185\n");
