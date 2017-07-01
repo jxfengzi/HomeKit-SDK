@@ -11,7 +11,6 @@
  */
 
 #include "DeskLamp.h"
-//#include "../services/AccessoryInformation.h"
 #include "../services/Lightbulb.h"
 
 Accessory * DeskLamp(PropertyOnGet onGet, PropertyOnSet onSet)
@@ -19,7 +18,6 @@ Accessory * DeskLamp(PropertyOnGet onGet, PropertyOnSet onSet)
     Accessory * thiz = Accessory_New();
     if (thiz != NULL)
     {
-//        TinyList_AddTail(&thiz->services, AccessoryInformation(onGet, onSet));
         TinyList_AddTail(&thiz->services, Lightbulb(onGet, onSet));
     }
 
