@@ -19,7 +19,7 @@
 
 static void SsdpInitializer(Channel *channel, void *ctx)
 {
-    printf("SsdpInitializer: %s\n", channel->id);
+    printf("SsdpInitializer\n");
 //    SocketChannel_AddLast(channel, ChannelIdleStateHandler(0, 0, 3));
     SocketChannel_AddLast(channel, ExampleSsdpHandler());
     SocketChannel_AddBefore(channel, ExampleSsdpHandler_Name, HttpMessageCodec());
@@ -29,6 +29,8 @@ static void ssdp_task(void *pvParameters)
 {
     Channel *ssdp = NULL;
     Bootstrap sb;
+
+    printf("start ssdp_task\n");
 
     // SSDP
     ssdp = MulticastChannel_New();
@@ -43,7 +45,7 @@ static void ssdp_task(void *pvParameters)
     if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.25", "239.255.255.250", 1900)))
     {
         printf("MulticastChannel_Join failed\n");
-        return;
+        //return;
     }
 
     // Bootstrap

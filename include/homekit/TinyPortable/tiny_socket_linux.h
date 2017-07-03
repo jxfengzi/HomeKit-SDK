@@ -41,6 +41,7 @@ TINY_BEGIN_DECLS
 #define tiny_accept                 accept
 #define tiny_recv                   recv
 #define tiny_send                   send
+#define tiny_setsockopt             setsockopt
 
 int tiny_socket_set_block(int fd, bool block);
 

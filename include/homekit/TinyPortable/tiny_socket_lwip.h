@@ -38,6 +38,7 @@ TINY_BEGIN_DECLS
 #define tiny_accept                 lwip_accept
 #define tiny_recv                   lwip_recv
 #define tiny_send                   lwip_send
+#define tiny_setsockopt             lwip_setsockopt
 
 int tiny_socket_set_block(int fd, bool block);
 
