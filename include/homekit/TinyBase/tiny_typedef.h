@@ -40,7 +40,6 @@
 #include <time.h>
 #else /* Linux */
 #include <unistd.h>
-//#include <sys/time.h>
 #endif /* _WIN32 */
 
 #include <stdio.h>
@@ -48,8 +47,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-//#include <errno.h>
 
 #ifdef __cplusplus
     #define TINY_BEGIN_DECLS extern "C" {

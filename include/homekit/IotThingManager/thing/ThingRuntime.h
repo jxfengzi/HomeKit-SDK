@@ -14,7 +14,7 @@
 #define __THING_RUNTIME_H__
 
 #include <tiny_base.h>
-#include <tiny_inline.h>
+#include <tiny_lor.h>
 #include <device/Device.h>
 #include <device/Service.h>
 
@@ -39,19 +39,8 @@ struct _ThingRuntime
     void                  * persistence;
 };
 
-TINY_INLINE
-void ThingRuntime_Copy(ThingRuntime *dst, ThingRuntime *src)
-{
-    if (dst != src)
-    {
-        dst->Name           = src->Name;
-        dst->Initialize     = src->Initialize;
-        dst->Run            = src->Run;
-        dst->Stop           = src->Stop;
-        dst->Destroy        = src->Destroy;
-        dst->persistence    = src->persistence;
-    }
-}
+TINY_LOR
+void ThingRuntime_Copy(ThingRuntime *dst, ThingRuntime *src);
 
 
 TINY_END_DECLS

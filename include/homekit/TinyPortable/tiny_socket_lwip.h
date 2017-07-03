@@ -17,8 +17,14 @@
 
 #include <tiny_inline.h>
 #include <tiny_typedef.h>
-#include <sys/time.h>
+
+#if LWIP_TIMEVAL_PRIVATE
+#else
+    #include <sys/time.h>
+#endif
+
 #include <lwip/lwip/sockets.h>
+
 
 TINY_BEGIN_DECLS
 

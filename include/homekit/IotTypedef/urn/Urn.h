@@ -13,7 +13,7 @@
 #ifndef __URN_H__
 #define __URN_H__
 
-#include <tiny_inline.h>
+#include <tiny_lor.h>
 #include "tiny_base.h"
 #include "UrnType.h"
 #include "constraint/typedef_constraint.h"
@@ -30,38 +30,16 @@ TINY_BEGIN_DECLS
  *
  * urn:miot-spec:property:On:00000030:philips
  */
-
-struct _Urn
+typedef struct _Urn
 {
     char        namespace[URN_NAMESPACE_LENGTH];
     UrnType     type;
     char        name[URN_NAME_LENGTH];
     uint32_t    value;
-};
+} Urn;
 
-typedef struct _Urn Urn;
-
-TINY_INLINE
-TinyRet Urn_Construct(Urn *thiz)
-{
-    memset(thiz, 0, sizeof(Urn));
-    return TINY_RET_OK;
-}
-
-TINY_INLINE
-void Urn_Dispose(Urn *thiz)
-{
-    memset(thiz, 0, sizeof(Urn));
-}
-
-TINY_INLINE
-void Urn_Initialize(Urn *thiz, const char *ns, UrnType type, const char *name, uint32_t value)
-{
-    strncpy(thiz->namespace, ns, URN_NAMESPACE_LENGTH);
-    thiz->type = type;
-    strncpy(thiz->name, name, URN_NAME_LENGTH);
-    thiz->value = value;
-}
+TINY_LOR
+void Urn_Initialize(Urn *thiz, const char *ns, UrnType type, const char *name, uint32_t value);
 
 
 TINY_END_DECLS

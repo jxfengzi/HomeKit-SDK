@@ -18,7 +18,12 @@
 #include "tiny_typedef.h"
 
 #ifdef ESP
-    #include <sys/time.h>
+    #if LWIP_TIMEVAL_PRIVATE
+        #include <lwip/lwip/sockets.h>
+        #include <lwip/apps/time.h>
+    #else
+        #include <sys/time.h>
+    #endif
 #else
     #ifdef WIN32
         #include <time.h>
@@ -27,13 +32,15 @@
     #endif
 #endif
 
-
 TINY_BEGIN_DECLS
 
 
+time_t tiny_time(time_t *t);
+
 int tiny_gettimeofday(struct timeval *tv, void *tz);
-int tiny_getstrtime(char buf[], int len);
-int tiny_sleep(int second);
+
+//int tiny_getstrtime(char buf[], int len);
+//int tiny_sleep(int second);
 //int tiny_usleep(int usecond);
 
 //
