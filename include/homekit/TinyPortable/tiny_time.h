@@ -28,7 +28,7 @@
     #ifdef WIN32
         #include <time.h>
     #else
-        #include <sys/time.h>
+        #include <time.h>
     #endif
 #endif
 
@@ -36,6 +36,7 @@ TINY_BEGIN_DECLS
 
 
 time_t tiny_time(time_t *t);
+//long tiny_time(void *t);
 
 int tiny_gettimeofday(struct timeval *tv, void *tz);
 

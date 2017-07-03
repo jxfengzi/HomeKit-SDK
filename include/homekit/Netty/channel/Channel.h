@@ -18,6 +18,7 @@
 #include <tiny_typedef.h>
 #include <TinyList.h>
 #include <selector/Selector.h>
+#include <tiny_socket.h>
 
 TINY_BEGIN_DECLS
 
@@ -89,14 +90,9 @@ struct _Channel
     void                          * ctx;
 };
 
-TINY_LOR
-bool Channel_IsActive(Channel *thiz);
-
-TINY_LOR
-bool Channel_IsClosed(Channel *thiz);
-
-TINY_LOR
-void Channel_Close(Channel *thiz);
+#define Channel_IsActive(thiz)      (thiz->fd >= 0)
+#define Channel_IsClosed(thiz)      (thiz->fd < 0)
+#define Channel_Close(thiz)         {tiny_socket_close(thiz->fd); thiz->fd = -1;}
 
 
 TINY_END_DECLS

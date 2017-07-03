@@ -29,9 +29,13 @@ struct _ThingManager
 
 typedef struct _ThingManager ThingManager;
 
-THING_API
-TINY_LOR
-ThingManager * ThingManager_New(void);
+//THING_API
+//TINY_LOR
+//ThingManager * ThingManager_New(void);
+//
+//THING_API
+//TINY_LOR
+//void ThingManager_Delete(ThingManager *thiz);
 
 THING_API
 TINY_LOR
@@ -40,10 +44,6 @@ TinyRet ThingManager_Construct(ThingManager *thiz);
 THING_API
 TINY_LOR
 void ThingManager_Dispose(ThingManager *thiz);
-
-THING_API
-TINY_LOR
-void ThingManager_Delete(ThingManager *thiz);
 
 THING_API
 TINY_LOR

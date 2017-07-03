@@ -23,21 +23,15 @@
 TINY_BEGIN_DECLS
 
 
-TINY_API
-TINY_LOR
-void * tiny_malloc(uint32_t size);
-
-TINY_API
-TINY_LOR
-void * tiny_calloc(uint32_t n, size_t size);
-
-TINY_API
-TINY_LOR
-void * tiny_realloc(void *p, uint32_t size);
-
-TINY_API
-TINY_LOR
-void tiny_free(void *p);
+#ifdef ESP
+    #include "tiny_malloc_esp.h"
+#else
+    #ifdef WIN32
+        #include "tiny_malloc_windows.h"
+    #else
+        #include "tiny_malloc_linux.h"
+    #endif
+#endif
 
 
 TINY_END_DECLS

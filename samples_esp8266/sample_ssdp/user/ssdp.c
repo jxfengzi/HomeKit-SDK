@@ -1,10 +1,11 @@
-#include <bootstrap/Bootstrap.h>
 #include <channel/stream/StreamServerChannel.h>
-#include <channel/stream/StreamServerChannelContext.h>
 #include <channel/SocketChannel.h>
 #include <channel/ChannelIdleStateHandler.h>
+#include <channel/multicast/MulticastChannel.h>
+#include <bootstrap/Bootstrap.h>
 #include <codec-http/HttpMessageCodec.h>
-#include "ExampleHandler.h"
+#include <tiny_ret.h>
+#include "ExampleSsdpHandler.h"
 
 #include "esp_common.h"
 #include <time.h>
@@ -16,108 +17,63 @@
 #define DEMO_WIFI_SSID      "airport-milink"
 #define DEMO_WIFI_PASSWORD  "milink123"
 
-ICACHE_FLASH_ATTR
-static void HttpServerInitializer(Channel *channel, void *ctx)
+static void SsdpInitializer(Channel *channel, void *ctx)
 {
-    printf("HttpServerInitializer: %s\n", channel->id);
+    printf("SsdpInitializer: %s\n", channel->id);
 //    SocketChannel_AddLast(channel, ChannelIdleStateHandler(0, 0, 3));
-    SocketChannel_AddLast(channel, ExampleHandler());
-    SocketChannel_AddBefore(channel, ExampleHandler_Name, HttpMessageCodec());
+    SocketChannel_AddLast(channel, ExampleSsdpHandler());
+    SocketChannel_AddBefore(channel, ExampleSsdpHandler_Name, HttpMessageCodec());
 }
 
-ICACHE_FLASH_ATTR
-static TinyRet init_http_server(Channel *server, uint16_t port)
+static void ssdp_task(void *pvParameters)
 {
-    TinyRet ret = TINY_RET_OK;
-
-    StreamServerChannel_Initialize(server, HttpServerInitializer, NULL);
-
-    do
-    {
-        ret = SocketChannel_Open(server, TYPE_TCP_SERVER);
-        if (RET_FAILED(ret))
-        {
-            printf("SocketChannel_Open failed: %d\n", TINY_RET_CODE(ret));
-            break;
-        }
-
-        ret = SocketChannel_Bind(server, port);
-        if (RET_FAILED(ret))
-        {
-            printf("SocketChannel_Bind failed: %d\n", TINY_RET_CODE(ret));
-            break;
-        }
-
-        ret = SocketChannel_SetBlock(server, false);
-        if (RET_FAILED(ret))
-        {
-            printf("SocketChannel_SetBlock failed: %d\n", TINY_RET_CODE(ret));
-            break;
-        }
-
-        ret = SocketChannel_Listen(server, ((StreamServerChannelContext *)server->ctx)->maxConnections);
-        if (RET_FAILED(ret))
-        {
-            printf("SocketChannel_Listen failed: %d\n", TINY_RET_CODE(ret));
-            break;
-        }
-    } while (0);
-
-    return ret;
-}
-
-static void http_server_task(void *pvParameters)
-{
-    TinyRet ret = TINY_RET_OK;
-    Channel *server1 = NULL;
+    Channel *ssdp = NULL;
     Bootstrap sb;
 
-    printf("Start HTTP Server\n");
-
-    // new TCP Server
-    server1 = StreamServerChannel_New(6);
-    StreamServerChannel_Initialize(server1, HttpServerInitializer, NULL);
-
-    ret = init_http_server(server1, 9090);
-    if (RET_FAILED(ret))
+    // SSDP
+    ssdp = MulticastChannel_New();
+    if (ssdp == NULL)
     {
-        printf("init_http_server failed: %d\n", TINY_RET_CODE(ret));
+        printf("MulticastChannel_New failed\n");
         return;
     }
 
-    printf("Bind Port: %d\n", server1->local.socket.port);
+    MulticastChannel_Initialize(ssdp, SsdpInitializer, NULL);
 
-    // Starting Bootstrap
-    ret = Bootstrap_Construct(&sb);
-    if (RET_FAILED(ret))
+    if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.25", "239.255.255.250", 1900)))
     {
-        printf("Bootstrap_Construct failed: %d\n", TINY_RET_CODE(ret));
+        printf("MulticastChannel_Join failed\n");
         return;
     }
 
-    printf("Bootstrap AddChannel: HTTP Server\n");
-
-    ret = Bootstrap_AddChannel(&sb, server1);
-    if (RET_FAILED(ret))
+    // Bootstrap
+    if (RET_FAILED(Bootstrap_Construct(&sb)))
     {
-        printf("Bootstrap_AddChannel failed: %d\n", TINY_RET_CODE(ret));
+        printf("Bootstrap_Construct failed\n");
         return;
     }
 
-    printf("Bootstrap running\n");
-
-    ret = Bootstrap_Sync(&sb);
-    if (RET_FAILED(ret))
+    if (RET_FAILED(Bootstrap_AddChannel(&sb, ssdp)))
     {
-        printf("Bootstrap_Sync failed: %d\n", TINY_RET_CODE(ret));
+        printf("Bootstrap_AddChannel failed\n");
         return;
     }
 
-    printf("Bootstrap shutdown\n");
+    if (RET_FAILED(Bootstrap_Sync(&sb)))
+    {
+        printf("Bootstrap_Sync failed\n");
+        return;
+    }
 
-    Bootstrap_Shutdown(&sb);
+    if (RET_FAILED(Bootstrap_Shutdown(&sb)))
+    {
+        printf("Bootstrap_Shutdown failed\n");
+        return;
+    }
+
     Bootstrap_Dispose(&sb);
 }
+
 
 /******************************************************************************
  * FunctionName : wifi_event_handler_cb
@@ -136,7 +92,7 @@ static void wifi_event_handler_cb(System_Event_t * event)
     {
         case EVENT_STAMODE_GOT_IP:
             printf("free heap size %d line %d \n", system_get_free_heap_size(), __LINE__);
-            xTaskCreate(http_server_task, "http_server", 1024 * 4, NULL, 4, NULL);
+            xTaskCreate(ssdp_task, "ssdp", 1024 * 4, NULL, 4, NULL);
             break;
 
         default:
@@ -145,7 +101,6 @@ static void wifi_event_handler_cb(System_Event_t * event)
 
     return;
 }
-
 
 /******************************************************************************
  * FunctionName : wifi_config

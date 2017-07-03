@@ -47,8 +47,8 @@ void HttpHeader_Set(HttpHeader * thiz, const char *name, const char *value);
 TINY_LOR
 void HttpHeader_SetInteger(HttpHeader * thiz, const char *name, uint32_t value);
 
-TINY_LOR
-uint32_t HttpHeader_GetCount(HttpHeader * thiz);
+//TINY_LOR
+//uint32_t HttpHeader_GetCount(HttpHeader * thiz);
 
 TINY_LOR
 const char * HttpHeader_GetValue(HttpHeader * thiz, const char *name);

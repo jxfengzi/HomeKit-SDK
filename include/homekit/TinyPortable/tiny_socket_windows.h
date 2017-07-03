@@ -28,53 +28,16 @@ TINY_BEGIN_DECLS
 #define tiny_setsockopt             setsockopt
 #define tiny_accept                 accept
 
-TINY_INLINE
-int tiny_socket_set_block(int fd, bool block)
-{
-    unsigned long ul = block ? 0 : 1;
-    return ioctlsocket(fd, FIONBIO, &ul);
-}
+int tiny_socket_set_block(int fd, bool block);
 
-TINY_INLINE
-int tiny_bind(int fd, const struct sockaddr *addr, socklen_t len)
-{
-    return (bind(fd, addr, len) == SOCKET_ERROR) ? -1 : 0;
-}
+int tiny_bind(int fd, const struct sockaddr *addr, socklen_t len);
 
-TINY_INLINE
-int tiny_listen(int fd, int backlog)
-{
-    return (listen(fd, backlog) == SOCKET_ERROR) ? -1 : 0;
-}
+int tiny_listen(int fd, int backlog);
 
-TINY_INLINE
-int tiny_recv(int fd, void *mem, size_t len, int flags)
-{
-//    if (n == SOCKET_ERROR)
-//    {
-//        DWORD e = GetLastError();
-//            LOGI("GetLastError: %d", e);
-//
-//            if (e == WSAEWOULDBLOCK)
-//            {
-//                break;
-//                air_usleep(100);
-//                continue;
-//            }
-//            else
-//            {
-//                break;
-//            }
-//    }
+int tiny_recv(int fd, void *mem, size_t len, int flags);
 
-    return (int) recv(fd, (char *)mem, len, flags);
-}
+int tiny_send(int fd, const void *data, size_t size, int flags);
 
-TINY_INLINE
-int tiny_send(int fd, const void *data, size_t size, int flags)
-{
-    return send(fd, data, size, 0);
-}
 
 TINY_END_DECLS
 

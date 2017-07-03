@@ -23,10 +23,14 @@
 TINY_BEGIN_DECLS
 
 
+TINY_LOR
 Channel * StreamServerChannel_New(int maxConnections);
 
+TINY_LOR
 void StreamServerChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
-TinyRet StreamServerChannel_Bind(Channel *thiz, uint16_t port);
+
+//TINY_LOR
+//TinyRet StreamServerChannel_Bind(Channel *thiz, uint16_t port);
 
 
 TINY_END_DECLS

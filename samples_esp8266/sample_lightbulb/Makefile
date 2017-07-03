@@ -136,6 +136,17 @@ INCLUDES := $(INCLUDES) -I $(PDIR)include               \
     -I $(PDIR)../../include/homekit/TinyContainer       \
     -I $(PDIR)../../include/homekit/TinyPortable
 
+# INCLUDES := $(INCLUDES) -I $(PDIR)include               \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/HapAccessory        \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/HapSupport          \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotCrypto           \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotThingManager     \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotTypedef          \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/Netty               \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyBase            \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyContainer       \
+# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyPortable
+
 sinclude $(SDK_PATH)/Makefile
 
 .PHONY: FORCE

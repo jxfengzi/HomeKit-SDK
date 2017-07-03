@@ -39,17 +39,7 @@ TINY_BEGIN_DECLS
 #define tiny_recv                   lwip_recv
 #define tiny_send                   lwip_send
 
-TINY_INLINE
-int tiny_socket_set_block(int fd, bool block)
-{
-    int flags = lwip_fcntl(fd, F_GETFL, 0);
-    if (flags < 0)
-    {
-        return flags;
-    }
-
-    return lwip_fcntl(fd, F_SETFL, block ? flags & ~O_NONBLOCK : flags | O_NONBLOCK);
-}
+int tiny_socket_set_block(int fd, bool block);
 
 #define inet_ntop(af,src,dst,size) \
     (((af) == AF_INET) ? ipaddr_ntoa_r((src),(dst),(size)) : NULL)

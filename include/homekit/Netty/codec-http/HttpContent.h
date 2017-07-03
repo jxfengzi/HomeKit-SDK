@@ -51,14 +51,13 @@ TinyRet HttpContent_SetSize(HttpContent *thiz, uint32_t size);
 TINY_LOR
 uint32_t HttpContent_AddBytes(HttpContent *thiz, const char *data, uint32_t size);
 
-TINY_LOR
-bool HttpContent_IsFull(HttpContent *thiz);
+#define HttpContent_IsFull(thiz)    (thiz->buf_size == thiz->data_size)
 
-TINY_LOR
-uint32_t HttpContent_GetSize(HttpContent * thiz);
+//TINY_LOR
+//uint32_t HttpContent_GetSize(HttpContent * thiz);
 
-TINY_LOR
-const char * HttpContent_GetObject(HttpContent * thiz);
+//TINY_LOR
+//const char * HttpContent_GetObject(HttpContent * thiz);
 
 
 TINY_END_DECLS

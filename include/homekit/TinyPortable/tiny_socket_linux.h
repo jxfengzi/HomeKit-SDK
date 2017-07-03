@@ -42,34 +42,7 @@ TINY_BEGIN_DECLS
 #define tiny_recv                   recv
 #define tiny_send                   send
 
-// recv
-//if (n == -1)
-//{
-//break;
-//
-//// more data
-////            if (errno == EAGAIN)
-////            {
-////                continue;
-////            }
-////            else
-////            {
-////                break;
-////            }
-//
-//}
-
-TINY_INLINE
-int tiny_socket_set_block(int fd, bool block)
-{
-    int flags = fcntl(fd, F_GETFL, 0);
-    if (flags < 0)
-    {
-        return flags;
-    }
-
-    return fcntl(fd, F_SETFL, block ? flags & ~O_NONBLOCK : flags | O_NONBLOCK);
-}
+int tiny_socket_set_block(int fd, bool block);
 
 
 TINY_END_DECLS

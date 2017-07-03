@@ -120,7 +120,7 @@ typedef enum _HttpParserStatus
 
 typedef struct _HttpMessage
 {
-    uint32_t            ref;
+//    uint32_t            ref;
 
     HttpType            type;
     char                ip[TINY_IP_LEN];
@@ -252,13 +252,13 @@ void HttpMessage_SetVersion(HttpMessage *thiz, int major, int minor);
 //bool HttpMessage_IsMethodEqual(HttpMessage *thiz, const char *method);
 
 /* for header */
-NETTY_API
-TINY_LOR
-void HttpMessage_SetHeader(HttpMessage *thiz, const char *name, const char *value);
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetHeader(HttpMessage *thiz, const char *name, const char *value);
 
-NETTY_API
-TINY_LOR
-void HttpMessage_SetHeaderInteger(HttpMessage *thiz, const char *name, uint32_t value);
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetHeaderInteger(HttpMessage *thiz, const char *name, uint32_t value);
 
 //NETTY_API
 //TINY_LOR
@@ -277,25 +277,23 @@ void HttpMessage_SetHeaderInteger(HttpMessage *thiz, const char *name, uint32_t 
 //const char * HttpMessage_GetHeaderValueAt(HttpMessage * thiz, uint32_t index);
 
 /* for content */
-NETTY_API
-TINY_LOR
-bool HttpMessage_IsContentFull(HttpMessage *thiz);
+#define HttpMessage_IsContentFull(thiz)     (thiz->content.buf_size == thiz->content.data_size)
 
-NETTY_API
-TINY_LOR
-const char * HttpMessage_GetContentObject(HttpMessage *thiz);
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetContentObject(HttpMessage *thiz);
 
 //NETTY_API
 //TINY_LOR
 //uint32_t HttpMessage_GetContentSize(HttpMessage *thiz);
 
-NETTY_API
-TINY_LOR
-TinyRet HttpMessage_SetContentSize(HttpMessage *thiz, uint32_t size);
+//NETTY_API
+//TINY_LOR
+//TinyRet HttpMessage_SetContentSize(HttpMessage *thiz, uint32_t size);
 
-NETTY_API
-TINY_LOR
-TinyRet HttpMessage_AddContentObject(HttpMessage *thiz, const char *bytes, uint32_t size);
+//NETTY_API
+//TINY_LOR
+//TinyRet HttpMessage_AddContentObject(HttpMessage *thiz, const char *bytes, uint32_t size);
 
 /* set request */
 NETTY_API

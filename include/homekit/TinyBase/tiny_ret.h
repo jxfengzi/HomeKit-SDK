@@ -78,9 +78,11 @@ TINY_BEGIN_DECLS
 
 typedef int32_t TinyRet;
 
+#ifdef TINY_DEBUG
 TINY_API
 TINY_LOR
 const char * tiny_ret_to_str(TinyRet ret);
+#endif
 
 #define RET_SUCCEEDED(r)                    (((TinyRet)(r)) >= 0)
 #define RET_FAILED(r)                       (((TinyRet)(r)) < 0)

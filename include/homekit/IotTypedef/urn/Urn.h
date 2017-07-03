@@ -30,6 +30,7 @@ TINY_BEGIN_DECLS
  *
  * urn:miot-spec:property:On:00000030:philips
  */
+
 typedef struct _Urn
 {
     char        namespace[URN_NAMESPACE_LENGTH];

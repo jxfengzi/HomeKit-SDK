@@ -31,7 +31,10 @@ typedef struct _StreamServerChannelContext
     void                      * initializerContext;
 } StreamServerChannelContext;
 
+TINY_LOR
 StreamServerChannelContext * StreamServerChannelContext_New(void);
+
+TINY_LOR
 void StreamServerChannelContext_Delete(StreamServerChannelContext *thiz);
 
 
