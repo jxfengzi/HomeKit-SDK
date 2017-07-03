@@ -13,6 +13,7 @@
 #ifndef __UINT8_VALUE_H__
 #define __UINT8_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -32,8 +33,13 @@ typedef struct _Uint8Value
     } range;
 } Uint8Value;
 
-TYPEDEF_API TinyRet Uint8Value_SetRange(Uint8Value *thiz, uint8_t min, uint8_t max, uint8_t step);
-TYPEDEF_API TinyRet Uint8Value_Set(Uint8Value *thiz, uint8_t value);
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint8Value_SetRange(Uint8Value *thiz, uint8_t min, uint8_t max, uint8_t step);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint8Value_Set(Uint8Value *thiz, uint8_t value);
 
 
 TINY_END_DECLS

@@ -13,6 +13,7 @@
 #ifndef __INT_VALUE_H__
 #define __INT_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -32,8 +33,13 @@ typedef struct _IntValue
     } range;
 } IntValue;
 
-TYPEDEF_API TinyRet IntValue_SetRange(IntValue *thiz, int32_t min, int32_t max, int32_t step);
-TYPEDEF_API TinyRet IntValue_Set(IntValue *thiz, int32_t value);
+TYPEDEF_API
+TINY_LOR
+TinyRet IntValue_SetRange(IntValue *thiz, int32_t min, int32_t max, int32_t step);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet IntValue_Set(IntValue *thiz, int32_t value);
 
 
 TINY_END_DECLS

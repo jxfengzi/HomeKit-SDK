@@ -10,7 +10,8 @@ static int test1(void)
 		return 0;
 	}
 
-	HttpMessage_SetType(&response, HTTP_RESPONSE);
+    response.type = HTTP_RESPONSE;
+
 	HttpMessage_SetVersion(&response, 1, 1);
 	HttpMessage_SetResponse(&response, 204, "No Content");
 	HttpMessage_SetHeader(&response, "Content-Type", "text/TinyJson");
@@ -30,14 +31,15 @@ static int test2(void)
 		return 0;
 	}
 
-	HttpMessage_SetType(&response, HTTP_RESPONSE);
+    response.type = HTTP_RESPONSE;
+
 	HttpMessage_SetVersion(&response, 1, 1);
 	HttpMessage_SetResponse(&response, 204, "No Content");
 	HttpMessage_SetHeader(&response, "Content-Type", "text/TinyJson");
 	HttpMessage_SetHeaderInteger(&response, "Content-Length", 0);
 
-	printf("BYTES: \n%s\n", HttpMessage_GetBytes(&response));
-	printf("SIZE: %d\n", HttpMessage_GetBytesSize(&response));
+	printf("BYTES: \n%s\n", HttpMessage_GetBytesWithoutContent(&response));
+	printf("SIZE: %d\n", HttpMessage_GetBytesSizeWithoutContent(&response));
 
 	HttpMessage_Dispose(&response);
 

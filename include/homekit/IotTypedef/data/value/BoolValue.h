@@ -13,6 +13,7 @@
 #ifndef __BOOL_VALUE_H__
 #define __BOOL_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -24,9 +25,17 @@ typedef struct _BoolValue
     bool            value;
 } BoolValue;
 
-TYPEDEF_API TinyRet BoolValue_Set(BoolValue *thiz, bool value);
-TYPEDEF_API TinyRet BoolValue_Retrieve(BoolValue *thiz, const char *string);
-TYPEDEF_API const char * BoolValue_ToString(BoolValue *thiz);
+TYPEDEF_API
+TINY_LOR
+TinyRet BoolValue_Set(BoolValue *thiz, bool value);
+
+//TYPEDEF_API
+//TINY_LOR
+//TinyRet BoolValue_Retrieve(BoolValue *thiz, const char *string);
+//
+//TYPEDEF_API
+//TINY_LOR
+//const char * BoolValue_ToString(BoolValue *thiz);
 
 
 TINY_END_DECLS

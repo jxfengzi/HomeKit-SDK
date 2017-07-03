@@ -25,9 +25,17 @@ typedef struct _DataBlobValue
     uint32_t        length;
 } DataBlobValue;
 
-TYPEDEF_API TinyRet DataBlobValue_Set(DataBlobValue *thiz, const char *dataBlob);
-TYPEDEF_API TinyRet DataBlobValue_Clear(DataBlobValue *thiz);
-TYPEDEF_API TinyRet DataBlobValue_Copy(DataBlobValue *thiz, DataBlobValue *other);
+TYPEDEF_API
+TINY_LOR
+TinyRet DataBlobValue_Set(DataBlobValue *thiz, const char *dataBlob);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet DataBlobValue_Clear(DataBlobValue *thiz);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet DataBlobValue_Copy(DataBlobValue *thiz, DataBlobValue *other);
 
 
 TINY_END_DECLS

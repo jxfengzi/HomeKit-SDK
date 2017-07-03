@@ -29,20 +29,44 @@ typedef struct _Tlv8Value
     uint32_t            _available;
 } Tlv8Value;
 
-TYPEDEF_API TinyRet Tlv8Value_Construct(Tlv8Value *thiz);
-TYPEDEF_API void Tlv8Value_Dispose(Tlv8Value *thiz);
+TYPEDEF_API
+TINY_LOR
+TinyRet Tlv8Value_Construct(Tlv8Value *thiz);
+
+TYPEDEF_API
+TINY_LOR
+void Tlv8Value_Dispose(Tlv8Value *thiz);
 
 //TYPEDEF_API TinyRet Tlv8Value_Clear(Tlv8Value *thiz);
 //TYPEDEF_API TinyRet Tlv8Value_Copy(Tlv8Value *thiz, Tlv8Value *other);
 
-TYPEDEF_API TinyRet Tlv8Value_Parse(Tlv8Value *thiz, const uint8_t *buf, uint32_t len, bool mergeValue);
-TYPEDEF_API const uint8_t * Tlv8Value_GetBytes(Tlv8Value *thiz);
-TYPEDEF_API uint32_t  Tlv8Value_GetBytesSize(Tlv8Value *thiz);
+TYPEDEF_API
+TINY_LOR
+TinyRet Tlv8Value_Parse(Tlv8Value *thiz, const uint8_t *buf, uint32_t len, bool mergeValue);
 
-TYPEDEF_API Tlv8 * Tlv8Value_Get(Tlv8Value *thiz, uint8_t type);
-TYPEDEF_API TinyRet Tlv8Value_AddByte(Tlv8Value *thiz, uint8_t type, uint8_t value, bool mergeValue);
-TYPEDEF_API TinyRet Tlv8Value_AddBytes(Tlv8Value *thiz, uint8_t type, const uint8_t *value, uint32_t length, bool mergeValue);
-TYPEDEF_API TinyRet Tlv8Value_AddSeparator(Tlv8Value *thiz);
+TYPEDEF_API
+TINY_LOR
+const uint8_t * Tlv8Value_GetBytes(Tlv8Value *thiz);
+
+TYPEDEF_API
+TINY_LOR
+uint32_t  Tlv8Value_GetBytesSize(Tlv8Value *thiz);
+
+TYPEDEF_API
+TINY_LOR
+Tlv8 * Tlv8Value_Get(Tlv8Value *thiz, uint8_t type);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Tlv8Value_AddByte(Tlv8Value *thiz, uint8_t type, uint8_t value, bool mergeValue);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Tlv8Value_AddBytes(Tlv8Value *thiz, uint8_t type, const uint8_t *value, uint32_t length, bool mergeValue);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Tlv8Value_AddSeparator(Tlv8Value *thiz);
 
 
 TINY_END_DECLS

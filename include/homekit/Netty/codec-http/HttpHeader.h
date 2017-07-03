@@ -26,19 +26,40 @@ typedef struct _HttpHeader
     TinyList        list;
 } HttpHeader;
 
-HttpHeader * HttpHeader_New(void);
+TINY_LOR
 TinyRet HttpHeader_Construct(HttpHeader *thiz);
-TinyRet HttpHeader_Dispose(HttpHeader *thiz);
-void HttpHeader_Delete(HttpHeader *thiz);
-void HttpHeader_Copy(HttpHeader *dst, HttpHeader *src);
 
+TINY_LOR
+TinyRet HttpHeader_Dispose(HttpHeader *thiz);
+
+//TINY_LOR
+//HttpHeader * HttpHeader_New(void);
+//
+//TINY_LOR
+//void HttpHeader_Delete(HttpHeader *thiz);
+//
+//TINY_LOR
+//void HttpHeader_Copy(HttpHeader *dst, HttpHeader *src);
+
+TINY_LOR
 void HttpHeader_Set(HttpHeader * thiz, const char *name, const char *value);
+
+TINY_LOR
 void HttpHeader_SetInteger(HttpHeader * thiz, const char *name, uint32_t value);
+
+TINY_LOR
 uint32_t HttpHeader_GetCount(HttpHeader * thiz);
+
+TINY_LOR
 const char * HttpHeader_GetValue(HttpHeader * thiz, const char *name);
+
+TINY_LOR
 const char * HttpHeader_GetNameAt(HttpHeader * thiz, uint32_t index);
+
+TINY_LOR
 const char * HttpHeader_GetValueAt(HttpHeader * thiz, uint32_t index);
 
+TINY_LOR
 uint32_t HttpHeader_Parse(HttpHeader *thiz, const char *bytes, uint32_t len);
 
 

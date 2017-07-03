@@ -13,6 +13,7 @@
 #ifndef __DATA_TYPE_H__
 #define __DATA_TYPE_H__
 
+#include <tiny_lor.h>
 #include "tiny_base.h"
 
 TINY_BEGIN_DECLS
@@ -37,8 +38,8 @@ typedef enum _DataType
     DATATYPE_DATA       = 10,
 } DataType;
 
+TINY_LOR
 const char * DataType_GetName(DataType type);
-
 
 
 TINY_END_DECLS

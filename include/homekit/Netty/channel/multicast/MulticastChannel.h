@@ -24,10 +24,19 @@
 TINY_BEGIN_DECLS
 
 
+TINY_LOR
 Channel * MulticastChannel_New(void);
+
+TINY_LOR
 void MulticastChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
+
+TINY_LOR
 TinyRet MulticastChannel_Join(Channel *thiz, const char *ip, const char *group, uint16_t port);
-TinyRet MulticastChannel_Write(Channel *thiz, const void *data, uint32_t len);
+
+//TINY_LOR
+//TinyRet MulticastChannel_Write(Channel *thiz, const void *data, uint32_t len);
+
+TINY_LOR
 TinyRet MulticastChannel_WriteTo(Channel *thiz, const void *data, uint32_t len, const void *to, uint32_t to_len);
 
 

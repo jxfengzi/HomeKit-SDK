@@ -13,6 +13,7 @@
 #ifndef __STRING_VALUE_H__
 #define __STRING_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -27,10 +28,21 @@ typedef struct _StringValue
     uint32_t            maxLength;
 } StringValue;
 
-TYPEDEF_API TinyRet StringValue_SetMaxLength(StringValue *thiz, uint32_t length);
-TYPEDEF_API TinyRet StringValue_Set(StringValue *thiz, const char *string);
-TYPEDEF_API TinyRet StringValue_Clear(StringValue *thiz);
-TYPEDEF_API TinyRet StringValue_Copy(StringValue *thiz, StringValue *other);
+TYPEDEF_API
+TINY_LOR
+TinyRet StringValue_SetMaxLength(StringValue *thiz, uint32_t length);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet StringValue_Set(StringValue *thiz, const char *string);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet StringValue_Clear(StringValue *thiz);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet StringValue_Copy(StringValue *thiz, StringValue *other);
 
 
 TINY_END_DECLS

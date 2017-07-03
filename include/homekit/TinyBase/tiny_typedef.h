@@ -65,11 +65,6 @@
 
 #define DIM(a) (sizeof(a)/sizeof(a[0]))
 
-#ifdef _WIN32
-    #define TINY_INLINE              __inline
-#else
-    #define TINY_INLINE              inline
-#endif /* _WIN32 */
 
 
 #endif /* __TINY_TYPEDEF_H__ */

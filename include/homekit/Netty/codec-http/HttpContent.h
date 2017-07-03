@@ -15,6 +15,7 @@
 #ifndef __HTTP_CONTENT_H__
 #define __HTTP_CONTENT_H__
 
+#include <tiny_lor.h>
 #include "tiny_base.h"
 
 TINY_BEGIN_DECLS
@@ -29,17 +30,34 @@ typedef struct _HttpContent
     uint32_t     data_size;
 } HttpContent;
 
-HttpContent * HttpContent_New(void);
+TINY_LOR
 TinyRet HttpContent_Construct(HttpContent *thiz);
-TinyRet HttpContent_Dispose(HttpContent *thiz);
-void HttpContent_Delete(HttpContent *thiz);
-void HttpContent_Copy(HttpContent *dst, HttpContent *src);
 
+TINY_LOR
+TinyRet HttpContent_Dispose(HttpContent *thiz);
+
+//TINY_LOR
+//HttpContent * HttpContent_New(void);
+//
+//TINY_LOR
+//void HttpContent_Delete(HttpContent *thiz);
+//
+//TINY_LOR
+//void HttpContent_Copy(HttpContent *dst, HttpContent *src);
+
+TINY_LOR
 TinyRet HttpContent_SetSize(HttpContent *thiz, uint32_t size);
+
+TINY_LOR
 uint32_t HttpContent_AddBytes(HttpContent *thiz, const char *data, uint32_t size);
+
+TINY_LOR
 bool HttpContent_IsFull(HttpContent *thiz);
 
+TINY_LOR
 uint32_t HttpContent_GetSize(HttpContent * thiz);
+
+TINY_LOR
 const char * HttpContent_GetObject(HttpContent * thiz);
 
 

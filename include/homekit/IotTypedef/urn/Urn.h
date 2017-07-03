@@ -13,6 +13,7 @@
 #ifndef __URN_H__
 #define __URN_H__
 
+#include <tiny_inline.h>
 #include "tiny_base.h"
 #include "UrnType.h"
 #include "constraint/typedef_constraint.h"
@@ -61,38 +62,6 @@ void Urn_Initialize(Urn *thiz, const char *ns, UrnType type, const char *name, u
     strncpy(thiz->name, name, URN_NAME_LENGTH);
     thiz->value = value;
 }
-
-#if 0
-TINY_INLINE
-void Urn_SetNamespace(Urn *thiz, const char *ns)
-{
-    strncpy(thiz->namespace, ns, URN_NAMESPACE_LENGTH);
-}
-
-TINY_INLINE
-void Urn_SetType(Urn *thiz, UrnType type)
-{
-    thiz->type = type;
-}
-
-TINY_INLINE
-void Urn_SetName(Urn *thiz, const char *name)
-{
-    strncpy(thiz->name, name, URN_NAME_LENGTH);
-}
-
-TINY_INLINE
-void Urn_SetValue(Urn *thiz, uint32_t value)
-{
-    thiz->value = value;
-}
-
-TINY_INLINE
-bool Urn_Equals(Urn *thiz, Urn *other)
-{
-    return (thiz == other || thiz->value == other->value);
-}
-#endif
 
 
 TINY_END_DECLS

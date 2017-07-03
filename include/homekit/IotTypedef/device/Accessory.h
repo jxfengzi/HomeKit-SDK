@@ -23,19 +23,23 @@ TINY_BEGIN_DECLS
 
 struct _Accessory
 {
-//    uint16_t            ref;
     uint16_t            iid;
     TinyList            services;
 };
 
 typedef struct _Accessory Accessory;
 
-TYPEDEF_API Accessory* Accessory_New(void);
-TYPEDEF_API void Accessory_Delete(Accessory *thiz);
-TYPEDEF_API void Accessory_InitializeInstanceID(Accessory *thiz, uint16_t aid);
+TYPEDEF_API
+TINY_LOR
+Accessory* Accessory_New(void);
 
-//TYPEDEF_API void Accessory_AddRef(Accessory *thiz);
-//TYPEDEF_API void Accessory_Release(Accessory *thiz);
+TYPEDEF_API
+TINY_LOR
+void Accessory_Delete(Accessory *thiz);
+
+TYPEDEF_API
+TINY_LOR
+void Accessory_InitializeInstanceID(Accessory *thiz, uint16_t aid);
 
 
 TINY_END_DECLS

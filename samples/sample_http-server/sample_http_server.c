@@ -1,7 +1,8 @@
-#include <channel/stream/StreamServerChannel.h>
+#include <bootstrap/Bootstrap.h>
 #include <channel/SocketChannel.h>
 #include <channel/ChannelIdleStateHandler.h>
-#include <bootstrap/Bootstrap.h>
+#include <channel/stream/StreamServerChannel.h>
+#include <channel/stream/StreamServerChannelContext.h>
 #include <codec-http/HttpMessageCodec.h>
 #include "ExampleHandler.h"
 
@@ -45,8 +46,49 @@ static void HttpServerInitializer(Channel *channel, void *ctx)
     SocketChannel_AddBefore(channel, ExampleHandler_Name, HttpMessageCodec());
 }
 
+static TinyRet init_http_server(Channel *server, uint16_t port)
+{
+    TinyRet ret = TINY_RET_OK;
+
+    StreamServerChannel_Initialize(server, HttpServerInitializer, NULL);
+
+    do
+    {
+        ret = SocketChannel_Open(server, TYPE_TCP_SERVER);
+        if (RET_FAILED(ret))
+        {
+            printf("SocketChannel_Open failed: %s\n", tiny_ret_to_str(ret));
+            break;
+        }
+
+        ret = SocketChannel_Bind(server, port);
+        if (RET_FAILED(ret))
+        {
+            printf("SocketChannel_Bind failed: %s\n", tiny_ret_to_str(ret));
+            break;
+        }
+
+        ret = SocketChannel_SetBlock(server, false);
+        if (RET_FAILED(ret))
+        {
+            printf("SocketChannel_SetBlock failed: %s\n", tiny_ret_to_str(ret));
+            break;
+        }
+
+        ret = SocketChannel_Listen(server, ((StreamServerChannelContext *)server->ctx)->maxConnections);
+        if (RET_FAILED(ret))
+        {
+            printf("SocketChannel_Listen failed: %s\n", tiny_ret_to_str(ret));
+            break;
+        }
+    } while (0);
+
+    return ret;
+}
+
 int main()
 {
+    TinyRet ret = TINY_RET_OK;
     Channel *server1 = NULL;
     Channel *server2 = NULL;
     Bootstrap sb;
@@ -55,13 +97,23 @@ int main()
 
     // new TCP Server
     server1 = StreamServerChannel_New(6);
-    StreamServerChannel_Initialize(server1, HttpServerInitializer, NULL);
-    StreamServerChannel_Bind(server1, 9091);
+    ret = init_http_server(server1, 9090);
+    if (RET_FAILED(ret))
+    {
+        printf("init_http_server failed: %s\n", tiny_ret_to_str(ret));
+        return 0;
+    }
+    printf("Bind Port: %d\n", server1->local.socket.port);
 
     // new TCP Server
     server2 = StreamServerChannel_New(2);
-    StreamServerChannel_Initialize(server2, HttpServerInitializer, NULL);
-    StreamServerChannel_Bind(server2, 9092);
+    ret = init_http_server(server1, 9090);
+    if (RET_FAILED(ret))
+    {
+        printf("init_http_server failed: %s\n", tiny_ret_to_str(ret));
+        return 0;
+    }
+    printf("Bind Port: %d\n", server1->local.socket.port);
 
     // Starting Bootstrap
     Bootstrap_Construct(&sb);

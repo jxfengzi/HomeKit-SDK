@@ -23,7 +23,9 @@ TINY_BEGIN_DECLS
 
 #define ChannelIdleStateHandler_Name    "ChannelIdleStateHandler"
 
-NETTY_API ChannelHandler * ChannelIdleStateHandler(uint32_t readerIdle, uint32_t writerIdle, uint32_t allIdle);
+NETTY_API
+TINY_LOR
+ChannelHandler * ChannelIdleStateHandler(uint32_t readerIdle, uint32_t writerIdle, uint32_t allIdle);
 
 
 TINY_END_DECLS

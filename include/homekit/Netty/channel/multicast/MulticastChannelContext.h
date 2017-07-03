@@ -29,7 +29,10 @@ typedef struct _MulticastChannelContext
     uint16_t                      port;
 } MulticastChannelContext;
 
+TINY_LOR
 MulticastChannelContext * MulticastChannelContext_New(void);
+
+TINY_LOR
 void MulticastChannelContext_Delete(MulticastChannelContext *thiz);
 
 

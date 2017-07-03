@@ -23,7 +23,6 @@ TINY_BEGIN_DECLS
 
 struct _Service
 {
-//    uint16_t            ref;
     uint16_t            aiid;
     uint16_t            iid;
     Urn                 type;
@@ -32,10 +31,8 @@ struct _Service
 
 typedef struct _Service Service;
 
-TYPEDEF_API Service* Service_New(void);
-TYPEDEF_API void Service_Delete(Service *thiz);
-//TYPEDEF_API void Service_AddRef(Service *thiz);
-//TYPEDEF_API void Service_Release(Service *thiz);
+TYPEDEF_API TINY_LOR Service* Service_New(void);
+TYPEDEF_API TINY_LOR void Service_Delete(Service *thiz);
 
 
 TINY_END_DECLS

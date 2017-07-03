@@ -13,6 +13,7 @@
 #ifndef __UINT32_VALUE_H__
 #define __UINT32_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -32,8 +33,13 @@ typedef struct _Uint32Value
     } range;
 } Uint32Value;
 
-TYPEDEF_API TinyRet Uint32Value_SetRange(Uint32Value *thiz, uint32_t min, uint32_t max, uint32_t step);
-TYPEDEF_API TinyRet Uint32Value_Set(Uint32Value *thiz, uint32_t value);
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint32Value_SetRange(Uint32Value *thiz, uint32_t min, uint32_t max, uint32_t step);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint32Value_Set(Uint32Value *thiz, uint32_t value);
 
 
 TINY_END_DECLS

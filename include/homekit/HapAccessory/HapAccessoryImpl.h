@@ -21,7 +21,9 @@
 TINY_BEGIN_DECLS
 
 
-HAP_API ThingRuntime * HapAccessoryImpl_GetInstance(HapPersistence *persistence);
+HAP_API
+TINY_LOR
+ThingRuntime * HapAccessoryImpl_GetInstance(HapPersistence *persistence);
 
 
 TINY_END_DECLS

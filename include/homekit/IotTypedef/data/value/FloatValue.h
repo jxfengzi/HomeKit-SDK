@@ -13,6 +13,7 @@
 #ifndef __FLOAT_VALUE_H__
 #define __FLOAT_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -32,8 +33,13 @@ typedef struct _FloatValue
     } range;
 } FloatValue;
 
-TYPEDEF_API TinyRet FloatValue_SetRange(FloatValue *thiz, float min, float max, float step);
-TYPEDEF_API TinyRet FloatValue_Set(FloatValue *thiz, float value);
+TYPEDEF_API
+TINY_LOR
+TinyRet FloatValue_SetRange(FloatValue *thiz, float min, float max, float step);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet FloatValue_Set(FloatValue *thiz, float value);
 
 
 TINY_END_DECLS

@@ -16,6 +16,7 @@
 #define __ENTITY_IDENTIFIER_H__
 
 #include <tiny_base.h>
+#include <tiny_lor.h>
 
 TINY_BEGIN_DECLS
 
@@ -31,6 +32,7 @@ typedef struct _EntityIdentifier
     uint32_t        length;
 } EntityIdentifier;
 
+TINY_LOR
 void EntityIdentifier_Initialize(EntityIdentifier *thiz, const char *id);
 
 

@@ -143,66 +143,164 @@ typedef struct _HttpMessage
     uint32_t            _size;
 } HttpMessage;
 
-NETTY_API HttpMessage * HttpMessage_New(void);
-NETTY_API TinyRet HttpMessage_Construct(HttpMessage *thiz);
-NETTY_API TinyRet HttpMessage_Dispose(HttpMessage *thiz);
-NETTY_API void HttpMessage_Delete(HttpMessage *thiz);
-//NETTY_API void HttpMessage_Copy(HttpMessage *dst, HttpMessage *src);
+NETTY_API
+TINY_LOR
+HttpMessage * HttpMessage_New(void);
 
-NETTY_API void HttpMessage_SetProtocolIdentifier(HttpMessage * thiz, const char *identifier);
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_Construct(HttpMessage *thiz);
 
-NETTY_API void HttpMessage_SetIp(HttpMessage *thiz, const char *ip);
-NETTY_API const char * HttpMessage_GetIp(HttpMessage *thiz);
-NETTY_API void HttpMessage_SetPort(HttpMessage *thiz, uint16_t port);
-NETTY_API uint16_t HttpMessage_GetPort(HttpMessage *thiz);
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_Dispose(HttpMessage *thiz);
+
+NETTY_API
+TINY_LOR
+void HttpMessage_Delete(HttpMessage *thiz);
+
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetProtocolIdentifier(HttpMessage * thiz, const char *identifier);
+//
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetIp(HttpMessage *thiz, const char *ip);
+//
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetIp(HttpMessage *thiz);
+//
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetPort(HttpMessage *thiz, uint16_t port);
+//
+//NETTY_API
+//TINY_LOR
+//uint16_t HttpMessage_GetPort(HttpMessage *thiz);
 
 /* Parse bytes & to bytes */
-NETTY_API TinyRet HttpMessage_Parse(HttpMessage * thiz, const char *bytes, uint32_t len);
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_Parse(HttpMessage * thiz, const char *bytes, uint32_t len);
+
 //NETTY_API TinyRet HttpMessage_ToBytes(HttpMessage *thiz, char **bytes, uint32_t *len);
 //NETTY_API uint32_t HttpMessage_ToString(HttpMessage *thiz, char *string, uint32_t len);
 
-NETTY_API void HttpMessage_SetType(HttpMessage * thiz, HttpType type);
-NETTY_API HttpType HttpMessage_GetType(HttpMessage * thiz);
+//NETTY_API
+//TINY_LOR
+//void HttpMessage_SetType(HttpMessage * thiz, HttpType type);
+//
+//NETTY_API
+//TINY_LOR
+//HttpType HttpMessage_GetType(HttpMessage * thiz);
 
-NETTY_API const char * HttpMessage_GetBytes(HttpMessage *thiz);
-NETTY_API uint32_t HttpMessage_GetBytesSize(HttpMessage *thiz);
+NETTY_API
+TINY_LOR
+const char * HttpMessage_GetBytesWithoutContent(HttpMessage *thiz);
+
+NETTY_API
+TINY_LOR
+uint32_t HttpMessage_GetBytesSizeWithoutContent(HttpMessage *thiz);
 
 /* for request */
-NETTY_API void HttpMessage_SetMethod(HttpMessage *thiz, const char * method);
-NETTY_API void HttpMessage_SetUri(HttpMessage *thiz, const char * uri);
-NETTY_API const char * HttpMessage_GetMethod(HttpMessage *thiz);
-NETTY_API const char * HttpMessage_GetUri(HttpMessage *thiz);
+NETTY_API
+TINY_LOR
+void HttpMessage_SetMethod(HttpMessage *thiz, const char * method);
+
+NETTY_API
+TINY_LOR
+void HttpMessage_SetUri(HttpMessage *thiz, const char * uri);
+
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetMethod(HttpMessage *thiz);
+//
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetUri(HttpMessage *thiz);
 
 /* for response */
-NETTY_API void HttpMessage_SetResponse(HttpMessage *thiz, int code, const char *status);
-NETTY_API const char * HttpMessage_GetStatus(HttpMessage *thiz);
-NETTY_API int HttpMessage_GetStatusCode(HttpMessage *thiz);
+NETTY_API
+TINY_LOR
+void HttpMessage_SetResponse(HttpMessage *thiz, int code, const char *status);
+
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetStatus(HttpMessage *thiz);
+//
+//NETTY_API
+//TINY_LOR
+//int HttpMessage_GetStatusCode(HttpMessage *thiz);
 
 /* for version */
-NETTY_API void HttpMessage_SetVersion(HttpMessage *thiz, int major, int minor);
-NETTY_API int HttpMessage_GetMajorVersion(HttpMessage *thiz);
-NETTY_API int HttpMessage_GetMinorVersion(HttpMessage *thiz);
+NETTY_API
+TINY_LOR
+void HttpMessage_SetVersion(HttpMessage *thiz, int major, int minor);
 
-/* for method */
-NETTY_API bool HttpMessage_IsMethodEqual(HttpMessage *thiz, const char *method);
+//NETTY_API
+//TINY_LOR
+//int HttpMessage_GetMajorVersion(HttpMessage *thiz);
+//
+//NETTY_API
+//TINY_LOR
+//int HttpMessage_GetMinorVersion(HttpMessage *thiz);
+//
+///* for method */
+//NETTY_API
+//TINY_LOR
+//bool HttpMessage_IsMethodEqual(HttpMessage *thiz, const char *method);
 
 /* for header */
-NETTY_API void HttpMessage_SetHeader(HttpMessage *thiz, const char *name, const char *value);
-NETTY_API void HttpMessage_SetHeaderInteger(HttpMessage *thiz, const char *name, uint32_t value);
-NETTY_API const char * HttpMessage_GetHeaderValue(HttpMessage *thiz, const char *name);
-NETTY_API uint32_t HttpMessage_GetHeaderCount(HttpMessage * thiz);
-NETTY_API const char * HttpMessage_GetHeaderNameAt(HttpMessage * thiz, uint32_t index);
-NETTY_API const char * HttpMessage_GetHeaderValueAt(HttpMessage * thiz, uint32_t index);
+NETTY_API
+TINY_LOR
+void HttpMessage_SetHeader(HttpMessage *thiz, const char *name, const char *value);
+
+NETTY_API
+TINY_LOR
+void HttpMessage_SetHeaderInteger(HttpMessage *thiz, const char *name, uint32_t value);
+
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetHeaderValue(HttpMessage *thiz, const char *name);
+//
+//NETTY_API
+//TINY_LOR
+//uint32_t HttpMessage_GetHeaderCount(HttpMessage * thiz);
+//
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetHeaderNameAt(HttpMessage * thiz, uint32_t index);
+//
+//NETTY_API
+//TINY_LOR
+//const char * HttpMessage_GetHeaderValueAt(HttpMessage * thiz, uint32_t index);
 
 /* for content */
-NETTY_API bool HttpMessage_IsContentFull(HttpMessage *thiz);
-NETTY_API const char * HttpMessage_GetContentObject(HttpMessage *thiz);
-NETTY_API uint32_t HttpMessage_GetContentSize(HttpMessage *thiz);
-NETTY_API TinyRet HttpMessage_SetContentSize(HttpMessage *thiz, uint32_t size);
-NETTY_API TinyRet HttpMessage_AddContentObject(HttpMessage *thiz, const char *bytes, uint32_t size);
+NETTY_API
+TINY_LOR
+bool HttpMessage_IsContentFull(HttpMessage *thiz);
+
+NETTY_API
+TINY_LOR
+const char * HttpMessage_GetContentObject(HttpMessage *thiz);
+
+//NETTY_API
+//TINY_LOR
+//uint32_t HttpMessage_GetContentSize(HttpMessage *thiz);
+
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_SetContentSize(HttpMessage *thiz, uint32_t size);
+
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_AddContentObject(HttpMessage *thiz, const char *bytes, uint32_t size);
 
 /* set request */
-NETTY_API TinyRet HttpMessage_SetRequest(HttpMessage *thiz, const char * method, const char *url);
+NETTY_API
+TINY_LOR
+TinyRet HttpMessage_SetRequest(HttpMessage *thiz, const char * method, const char *url);
 
 
 TINY_END_DECLS

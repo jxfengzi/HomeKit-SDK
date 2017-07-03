@@ -89,8 +89,13 @@ struct _Channel
     void                          * ctx;
 };
 
+TINY_LOR
 bool Channel_IsActive(Channel *thiz);
+
+TINY_LOR
 bool Channel_IsClosed(Channel *thiz);
+
+TINY_LOR
 void Channel_Close(Channel *thiz);
 
 

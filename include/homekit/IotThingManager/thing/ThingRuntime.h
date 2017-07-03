@@ -14,6 +14,7 @@
 #define __THING_RUNTIME_H__
 
 #include <tiny_base.h>
+#include <tiny_inline.h>
 #include <device/Device.h>
 #include <device/Service.h>
 

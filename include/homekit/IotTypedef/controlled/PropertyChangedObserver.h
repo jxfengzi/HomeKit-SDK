@@ -26,7 +26,10 @@ typedef struct _PropertyChangedObserver
     void                        * ctx;
 } PropertyChangedObserver;
 
+TINY_LOR
 PropertyChangedObserver* PropertyChangedObserver_New(void);
+
+TINY_LOR
 void PropertyChangedObserver_Delete(PropertyChangedObserver *thiz);
 
 

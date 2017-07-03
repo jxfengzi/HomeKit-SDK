@@ -20,7 +20,7 @@
 #include <tiny_ret.h>
 #include "channel/Channel.h"
 #include <selector/Selector.h>
-#include <timer/Timer.h>
+//#include <timer/Timer.h>
 
 TINY_BEGIN_DECLS
 
@@ -28,8 +28,8 @@ TINY_BEGIN_DECLS
 typedef enum _TimerType
 {
     TIMER_TYPE_NONE             = 0,
-    TIMER_TYPE_TIMER            = 1,
-    TIMER_TYPE_CHANNEL_TIMER    = 2,
+    TIMER_TYPE_CHANNEL_TIMER    = 1,
+//    TIMER_TYPE_TIMER            = 2,
 } TimerType;
 
 typedef struct _TimerConfiguration
@@ -43,21 +43,41 @@ typedef struct _Bootstrap
 {
     Selector                    selector;
     TinyList                    channels;
-    TinyList                    timers;
+//    TinyList                    timers;
     TimerConfiguration          timerConfiguration;
 } Bootstrap;
 
-NETTY_API TinyRet Bootstrap_Construct(Bootstrap *thiz);
-NETTY_API void Bootstrap_Dispose(Bootstrap *thiz);
+NETTY_API
+TINY_LOR
+TinyRet Bootstrap_Construct(Bootstrap *thiz);
 
-NETTY_API TinyRet Bootstrap_AddTimer(Bootstrap *thiz, Timer *timer);
-NETTY_API TinyRet Bootstrap_RemoveTimer(Bootstrap *thiz, Timer *timer);
+NETTY_API
+TINY_LOR
+void Bootstrap_Dispose(Bootstrap *thiz);
 
-NETTY_API TinyRet Bootstrap_AddChannel(Bootstrap *thiz, Channel *channel);
-NETTY_API TinyRet Bootstrap_RemoveChannel(Bootstrap *thiz, Channel *channel);
+//NETTY_API
+//TINY_LOR
+//TinyRet Bootstrap_AddTimer(Bootstrap *thiz, Timer *timer);
+//
+//NETTY_API
+//TINY_LOR
+//TinyRet Bootstrap_RemoveTimer(Bootstrap *thiz, Timer *timer);
 
-NETTY_API TinyRet Bootstrap_Sync(Bootstrap *thiz);
-NETTY_API TinyRet Bootstrap_Shutdown(Bootstrap *thiz);
+NETTY_API
+TINY_LOR
+TinyRet Bootstrap_AddChannel(Bootstrap *thiz, Channel *channel);
+
+NETTY_API
+TINY_LOR
+TinyRet Bootstrap_RemoveChannel(Bootstrap *thiz, Channel *channel);
+
+NETTY_API
+TINY_LOR
+TinyRet Bootstrap_Sync(Bootstrap *thiz);
+
+NETTY_API
+TINY_LOR
+TinyRet Bootstrap_Shutdown(Bootstrap *thiz);
 
 
 TINY_END_DECLS

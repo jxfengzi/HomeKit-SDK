@@ -37,12 +37,29 @@ struct _Device
 
 typedef struct _Device Device;
 
-TYPEDEF_API Device* Device_New(void);
-TYPEDEF_API void Device_Delete(Device *thiz);
-TYPEDEF_API void Device_InitializeInstanceID(Device *thiz);
-TYPEDEF_API Device* Device_Build(DeviceConfig *thiz);
-TYPEDEF_API Property * Device_GetProperty(Device *device, uint16_t aid, uint16_t iid);
-TYPEDEF_API int Device_NotifyPropertiesChanged(Device *thiz);
+TYPEDEF_API
+TINY_LOR
+Device* Device_New(void);
+
+TYPEDEF_API
+TINY_LOR
+void Device_Delete(Device *thiz);
+
+TYPEDEF_API
+TINY_LOR
+void Device_InitializeInstanceID(Device *thiz);
+
+TYPEDEF_API
+TINY_LOR
+Device* Device_Build(DeviceConfig *thiz);
+
+TYPEDEF_API
+TINY_LOR
+Property * Device_GetProperty(Device *device, uint16_t aid, uint16_t iid);
+
+TYPEDEF_API
+TINY_LOR
+int Device_NotifyPropertiesChanged(Device *thiz);
 
 
 TINY_END_DECLS

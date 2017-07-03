@@ -29,15 +29,33 @@ struct _ThingManager
 
 typedef struct _ThingManager ThingManager;
 
-THING_API ThingManager * ThingManager_New(void);
-THING_API TinyRet ThingManager_Construct(ThingManager *thiz);
-THING_API void ThingManager_Dispose(ThingManager *thiz);
-THING_API void ThingManager_Delete(ThingManager *thiz);
+THING_API
+TINY_LOR
+ThingManager * ThingManager_New(void);
 
-THING_API TinyRet ThingManager_SetRuntimeImpl(ThingManager *thiz, ThingRuntime *impl);
+THING_API
+TINY_LOR
+TinyRet ThingManager_Construct(ThingManager *thiz);
 
-THING_API TinyRet ThingManager_Run(ThingManager *thiz, Device *device);
-THING_API TinyRet ThingManager_Stop(ThingManager *thiz);
+THING_API
+TINY_LOR
+void ThingManager_Dispose(ThingManager *thiz);
+
+THING_API
+TINY_LOR
+void ThingManager_Delete(ThingManager *thiz);
+
+THING_API
+TINY_LOR
+TinyRet ThingManager_SetRuntimeImpl(ThingManager *thiz, ThingRuntime *impl);
+
+THING_API
+TINY_LOR
+TinyRet ThingManager_Run(ThingManager *thiz, Device *device);
+
+THING_API
+TINY_LOR
+TinyRet ThingManager_Stop(ThingManager *thiz);
 
 
 

@@ -21,6 +21,7 @@
 #include "tiny_base.h"
 #include "TinyContainerListener.h"
 #include "TinyList.h"
+#include <tiny_lor.h>
 
 TINY_BEGIN_DECLS
 
@@ -32,21 +33,58 @@ typedef struct _TinyMap
     void                              * data_delete_listener_ctx;
 } TinyMap;
 
-TINY_API TinyMap * TinyMap_New(void);
-TINY_API TinyRet TinyMap_Construct(TinyMap *thiz);
-TINY_API TinyRet TinyMap_Dispose(TinyMap *thiz);
-TINY_API void TinyMap_Delete(TinyMap *thiz);
 
-TINY_API int TinyMap_Foreach(TinyMap * thiz, TinyContainerItemVisit visit, void * ctx);
-TINY_API void TinyMap_SetDeleteListener(TinyMap * thiz, TinyContainerItemDeleteListener listener, void *ctx);
+TINY_API
+TINY_LOR
+TinyRet TinyMap_Construct(TinyMap *thiz);
 
-TINY_API int TinyMap_GetSize(TinyMap *thiz);
-TINY_API int TinyMap_GetCount(TinyMap *thiz);
-TINY_API void * TinyMap_GetValueAt(TinyMap *thiz, uint32_t index);
-TINY_API void * TinyMap_GetValue(TinyMap *thiz, const char *key);
-TINY_API TinyRet TinyMap_Insert(TinyMap *thiz, const char *key, void *value);
-TINY_API TinyRet TinyMap_Erase(TinyMap *thiz, const char *key);
-TINY_API void TinyMap_Clear(TinyMap *thiz);
+TINY_API
+TINY_LOR
+TinyRet TinyMap_Dispose(TinyMap *thiz);
+
+//TINY_API
+//TINY_LOR
+//TinyMap * TinyMap_New(void);
+//
+//TINY_API
+//TINY_LOR
+//void TinyMap_Delete(TinyMap *thiz);
+//
+//TINY_API
+//TINY_LOR
+//int TinyMap_Foreach(TinyMap * thiz, TinyContainerItemVisit visit, void * ctx);
+
+TINY_API
+TINY_LOR
+void TinyMap_SetDeleteListener(TinyMap * thiz, TinyContainerItemDeleteListener listener, void *ctx);
+
+//TINY_API
+//TINY_LOR
+//int TinyMap_GetSize(TinyMap *thiz);
+//
+//TINY_API
+//TINY_LOR
+//int TinyMap_GetCount(TinyMap *thiz);
+//
+//TINY_API
+//TINY_LOR
+//void * TinyMap_GetValueAt(TinyMap *thiz, uint32_t index);
+
+TINY_API
+TINY_LOR
+void * TinyMap_GetValue(TinyMap *thiz, const char *key);
+
+TINY_API
+TINY_LOR
+TinyRet TinyMap_Insert(TinyMap *thiz, const char *key, void *value);
+
+TINY_API
+TINY_LOR
+TinyRet TinyMap_Erase(TinyMap *thiz, const char *key);
+
+//TINY_API
+//TINY_LOR
+//void TinyMap_Clear(TinyMap *thiz);
 
 
 TINY_END_DECLS

@@ -133,7 +133,8 @@ INCLUDES := $(INCLUDES) -I $(PDIR)include               \
     -I $(PDIR)../../include/homekit/IotTypedef          \
     -I $(PDIR)../../include/homekit/Netty               \
     -I $(PDIR)../../include/homekit/TinyBase            \
-    -I $(PDIR)../../include/homekit/TinyContainer
+    -I $(PDIR)../../include/homekit/TinyContainer       \
+    -I $(PDIR)../../include/homekit/TinyPortable
 
 sinclude $(SDK_PATH)/Makefile
 

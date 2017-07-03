@@ -23,7 +23,9 @@ TINY_BEGIN_DECLS
 
 #define HttpMessageCodec_Name    "HttpMessageCodec"
 
-NETTY_API ChannelHandler * HttpMessageCodec(void);
+NETTY_API
+TINY_LOR
+ChannelHandler * HttpMessageCodec(void);
 
 
 TINY_END_DECLS

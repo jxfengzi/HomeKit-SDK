@@ -15,6 +15,7 @@
 #ifndef __SELECTOR_H__
 #define __SELECTOR_H__
 
+#include <tiny_lor.h>
 #include "tiny_base.h"
 
 TINY_BEGIN_DECLS
@@ -47,13 +48,24 @@ typedef enum _SelectorOperation
 
 //Selector * Selector_New(void);
 //void Selector_Delete(Selector *thiz);
+
+TINY_LOR
 TinyRet Selector_Construct(Selector *thiz);
+
+TINY_LOR
 TinyRet Selector_Dispose(Selector *thiz);
 
+TINY_LOR
 TinyRet Selector_Loop(Selector *thiz);
+
+TINY_LOR
 void Selector_Register(Selector *thiz, int fd, SelectorOperation op);
+
+TINY_LOR
 bool Selector_IsReadable(Selector *thiz, int fd);
-bool Selector_IsWriteable(Selector *thiz, int fd);
+
+//TINY_LOR
+//bool Selector_IsWriteable(Selector *thiz, int fd);
 
 
 TINY_END_DECLS

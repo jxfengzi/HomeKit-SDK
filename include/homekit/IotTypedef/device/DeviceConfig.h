@@ -16,6 +16,7 @@
 #include "tiny_base.h"
 #include "common/typedef_api.h"
 #include <constraint/typedef_constraint.h>
+#include <tiny_lor.h>
 
 TINY_BEGIN_DECLS
 
@@ -97,95 +98,62 @@ typedef void (* DeviceConfigurationInitializer)(DeviceConfig *thiz, void *ctx);
 
 //TYPEDEF_API DeviceConfig * DeviceConfig_New(void);
 //TYPEDEF_API void DeviceConfig_Delete(DeviceConfig *thiz);
-TYPEDEF_API TinyRet DeviceConfig_Construct(DeviceConfig *thiz);
-TYPEDEF_API void DeviceConfig_Dispose(DeviceConfig *thiz);
 
-TINY_INLINE
-void DeviceConfig_Initialize(DeviceConfig *thiz, DeviceConfigurationInitializer initializer, void *ctx)
-{
-    initializer(thiz, ctx);
-}
+TYPEDEF_API
+TINY_LOR
+TinyRet DeviceConfig_Construct(DeviceConfig *thiz);
 
-TINY_INLINE
-void DeviceConfig_Copy(DeviceConfig *dst, DeviceConfig *src)
-{
-    if (dst != src)
-    {
-        strncpy(dst->ip, src->ip, TINY_IP_LEN);
-        strncpy(dst->pin, src->pin, DEVICE_PIN_LENGTH);
-        strncpy(dst->id, src->id, DEVICE_ID_LENGTH);
-        strncpy(dst->name, src->name, DEVICE_NAME_LENGTH);
-        strncpy(dst->model, src->model, DEVICE_MODEL_LENGTH);
-        dst->port = src->port;
-        dst->configurationNumber = src->configurationNumber;
-        dst->categoryIdentifier = src->categoryIdentifier;
-        dst->featureFlags = src->featureFlags;
-        dst->stateNumber = src->stateNumber;
-        dst->statusFlags = src->statusFlags;
-        dst->protocolVersion = src->protocolVersion;
-    }
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_Dispose(DeviceConfig *thiz);
 
-TINY_INLINE
-void DeviceConfig_SetIp(DeviceConfig *thiz, const char *ip)
-{
-    strncpy(thiz->ip, ip, TINY_IP_LEN);
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_Initialize(DeviceConfig *thiz, DeviceConfigurationInitializer initializer, void *ctx);
 
-TINY_INLINE
-void DeviceConfig_SetPort(DeviceConfig *thiz, uint16_t port)
-{
-    thiz->port = port;
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_Copy(DeviceConfig *dst, DeviceConfig *src);
 
-TINY_INLINE
-void DeviceConfig_SetName(DeviceConfig *thiz, const char *name)
-{
-    strncpy(thiz->name, name, DEVICE_NAME_LENGTH);
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetIp(DeviceConfig *thiz, const char *ip);
 
-TINY_INLINE
-void DeviceConfig_SetId(DeviceConfig *thiz, const char *id)
-{
-    strncpy(thiz->id, id, DEVICE_ID_LENGTH);
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetPort(DeviceConfig *thiz, uint16_t port);
 
-TINY_INLINE
-void DeviceConfig_SetModelName(DeviceConfig *thiz, const char *model)
-{
-    strncpy(thiz->model, model, DEVICE_MODEL_LENGTH);
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetName(DeviceConfig *thiz, const char *name);
 
-TINY_INLINE
-void DeviceConfig_SetConfigurationNumber(DeviceConfig *thiz, uint32_t value)
-{
-    thiz->configurationNumber = value;
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetId(DeviceConfig *thiz, const char *id);
 
-TINY_INLINE
-void DeviceConfig_SetCurrentStateNumber(DeviceConfig *thiz, uint32_t value)
-{
-    thiz->stateNumber = value;
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetModelName(DeviceConfig *thiz, const char *model);
 
-TINY_INLINE
-void DeviceConfig_SetFeatureFlags(DeviceConfig *thiz, uint32_t value)
-{
-    thiz->featureFlags = value;
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetConfigurationNumber(DeviceConfig *thiz, uint32_t value);
 
-TINY_INLINE
-void DeviceConfig_SetCategoryIdentifier(DeviceConfig *thiz, uint32_t value)
-{
-    thiz->categoryIdentifier = value;
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetCurrentStateNumber(DeviceConfig *thiz, uint32_t value);
 
-TINY_INLINE
-void DeviceConfig_SetPinCode(DeviceConfig *thiz, const char *pin)
-{
-    strncpy(thiz->pin, pin, DEVICE_PIN_LENGTH);
-}
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetFeatureFlags(DeviceConfig *thiz, uint32_t value);
 
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetCategoryIdentifier(DeviceConfig *thiz, uint32_t value);
+
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetPinCode(DeviceConfig *thiz, const char *pin);
 
 
 TINY_END_DECLS

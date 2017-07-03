@@ -13,6 +13,7 @@
 #ifndef __UINT16_VALUE_H__
 #define __UINT16_VALUE_H__
 
+#include <tiny_lor.h>
 #include "common/typedef_api.h"
 #include "tiny_base.h"
 
@@ -32,8 +33,13 @@ typedef struct _Uint16Value
     } range;
 } Uint16Value;
 
-TYPEDEF_API TinyRet Uint16Value_SetRange(Uint16Value *thiz, uint16_t min, uint16_t max, uint16_t step);
-TYPEDEF_API TinyRet Uint16Value_Set(Uint16Value *thiz, uint16_t value);
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint16Value_SetRange(Uint16Value *thiz, uint16_t min, uint16_t max, uint16_t step);
+
+TYPEDEF_API
+TINY_LOR
+TinyRet Uint16Value_Set(Uint16Value *thiz, uint16_t value);
 
 
 TINY_END_DECLS

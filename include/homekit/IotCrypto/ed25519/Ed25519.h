@@ -17,6 +17,7 @@
 
 #include <tiny_base.h>
 #include <stddef.h>
+#include <tiny_lor.h>
 #include "common/crypto_api.h"
 
 TINY_BEGIN_DECLS
@@ -50,19 +51,27 @@ typedef struct _Ed25519KeyPair
     ED25519PublicKey publicKey;
 } Ed25519KeyPair;
 
-CRYPTO_API void Ed25519_GenerateKeyPair(Ed25519KeyPair *thiz);
+CRYPTO_API
+TINY_LOR
+void Ed25519_GenerateKeyPair(Ed25519KeyPair *thiz);
 
-CRYPTO_API void Ed25519KeyPair_Copy(Ed25519KeyPair *dst, Ed25519KeyPair *src);
+CRYPTO_API
+TINY_LOR
+void Ed25519KeyPair_Copy(Ed25519KeyPair *dst, Ed25519KeyPair *src);
 
-CRYPTO_API TinyRet Ed25519_Verify(ED25519PublicKey *key,
-                                  ED25519Signature *signature,
-                                  const uint8_t *data,
-                                  uint32_t length);
+CRYPTO_API
+TINY_LOR
+TinyRet Ed25519_Verify(ED25519PublicKey *key,
+                       ED25519Signature *signature,
+                       const uint8_t *data,
+                       uint32_t length);
 
-CRYPTO_API void Ed25519_Sign(Ed25519KeyPair *keys,
-                             ED25519Signature *signature,
-                             const uint8_t *data,
-                             uint32_t length);
+CRYPTO_API
+TINY_LOR
+void Ed25519_Sign(Ed25519KeyPair *keys,
+                  ED25519Signature *signature,
+                  const uint8_t *data,
+                  uint32_t length);
 
 
 TINY_END_DECLS

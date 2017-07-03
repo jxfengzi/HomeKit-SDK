@@ -27,7 +27,6 @@ TINY_BEGIN_DECLS
 
 struct _Property
 {
-//    uint16_t            ref;
     uint16_t            aiid;
     uint16_t            siid;
     uint16_t            iid;
@@ -42,29 +41,25 @@ struct _Property
     uint16_t            operation;
 };
 
-TYPEDEF_API Property* Property_New(void);
-TYPEDEF_API void Property_Delete(Property *thiz);
+TYPEDEF_API
+TINY_LOR
+Property* Property_New(void);
 
-//TYPEDEF_API void Property_AddRef(Property *thiz);
-//TYPEDEF_API void Property_Release(Property *thiz);
+TYPEDEF_API
+TINY_LOR
+void Property_Delete(Property *thiz);
 
-TINY_INLINE
-bool Property_IsReadable(Property *thiz)
-{
-    return ((thiz->accessType & ACCESS_READ) != 0);
-}
+TYPEDEF_API
+TINY_LOR
+bool Property_IsReadable(Property *thiz);
 
-TINY_INLINE
-bool Property_IsWritable(Property *thiz)
-{
-    return ((thiz->accessType & ACCESS_WRITE) != 0);
-}
+TYPEDEF_API
+TINY_LOR
+bool Property_IsWritable(Property *thiz);
 
-TINY_INLINE
-bool Property_IsNotifiable(Property *thiz)
-{
-    return ((thiz->accessType & ACCESS_NOTIFY) != 0);
-}
+TYPEDEF_API
+TINY_LOR
+bool Property_IsNotifiable(Property *thiz);
 
 
 TINY_END_DECLS
