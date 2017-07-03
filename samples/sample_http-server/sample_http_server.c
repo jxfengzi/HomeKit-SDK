@@ -57,28 +57,28 @@ static TinyRet init_http_server(Channel *server, uint16_t port)
         ret = SocketChannel_Open(server, TYPE_TCP_SERVER);
         if (RET_FAILED(ret))
         {
-            printf("SocketChannel_Open failed: %s\n", tiny_ret_to_str(ret));
+            printf("SocketChannel_Open failed: %d\n", TINY_RET_CODE(ret));
             break;
         }
 
         ret = SocketChannel_Bind(server, port);
         if (RET_FAILED(ret))
         {
-            printf("SocketChannel_Bind failed: %s\n", tiny_ret_to_str(ret));
+            printf("SocketChannel_Bind failed: %d\n", TINY_RET_CODE(ret));
             break;
         }
 
         ret = SocketChannel_SetBlock(server, false);
         if (RET_FAILED(ret))
         {
-            printf("SocketChannel_SetBlock failed: %s\n", tiny_ret_to_str(ret));
+            printf("SocketChannel_SetBlock failed: %d\n", TINY_RET_CODE(ret));
             break;
         }
 
         ret = SocketChannel_Listen(server, ((StreamServerChannelContext *)server->ctx)->maxConnections);
         if (RET_FAILED(ret))
         {
-            printf("SocketChannel_Listen failed: %s\n", tiny_ret_to_str(ret));
+            printf("SocketChannel_Listen failed: %d\n", TINY_RET_CODE(ret));
             break;
         }
     } while (0);
@@ -100,7 +100,7 @@ int main()
     ret = init_http_server(server1, 9090);
     if (RET_FAILED(ret))
     {
-        printf("init_http_server failed: %s\n", tiny_ret_to_str(ret));
+        printf("init_http_server failed: %d\n", TINY_RET_CODE(ret));
         return 0;
     }
     printf("Bind Port: %d\n", server1->local.socket.port);
@@ -110,7 +110,7 @@ int main()
     ret = init_http_server(server1, 9090);
     if (RET_FAILED(ret))
     {
-        printf("init_http_server failed: %s\n", tiny_ret_to_str(ret));
+        printf("init_http_server failed: %d\n", TINY_RET_CODE(ret));
         return 0;
     }
     printf("Bind Port: %d\n", server1->local.socket.port);

@@ -88,12 +88,11 @@ static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType
 
     if (RET_SUCCEEDED(HttpMessage_Construct(&response)))
     {
-        response.type = HTTP_RESPONSE;
-
         HttpMessage_SetVersion(&response, 1, 1);
         HttpMessage_SetResponse(&response, 200, "OK");
-        HttpMessage_SetHeader(&response, "Content-Type", "text/json");
-        HttpMessage_SetHeaderInteger(&response, "Content-Length", 0);
+
+        HttpHeader_Set(&response.header, "Content-Type", "text/TinyJson");
+        HttpHeader_SetInteger(&response.header, "Content-Length", 0);
 
         SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, HttpMessage_GetBytesWithoutContent(&response), HttpMessage_GetBytesSizeWithoutContent(&response));
 

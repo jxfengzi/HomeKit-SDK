@@ -76,7 +76,7 @@ static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
         ret = ThingManager_Construct(&thiz->manager);
         if (RET_FAILED(ret))
         {
-            printf("ThingManager_Construct FAILED: %s\n", tiny_ret_to_str(ret));
+            printf("ThingManager_Construct FAILED: %d\n", TINY_RET_CODE(ret));
             break;
         }
 

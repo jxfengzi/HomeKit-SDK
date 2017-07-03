@@ -151,7 +151,7 @@ static TinyRet _start(void)
     ret = my_socket_init();
     if (RET_FAILED(ret))
     {
-        printf("my_socket_init FAILED: %s\n", tiny_ret_to_str(ret));
+        printf("my_socket_init FAILED: %d\n", TINY_RET_CODE(ret));
         return ret;
     }
 
@@ -176,7 +176,7 @@ static TinyRet _start(void)
     ret = AccessoryHost_Initialize(host, HapPersistenceImpl_GetInstance());
     if (RET_FAILED(ret))
     {
-        printf("AccessoryHost_Initialize FAILED: %s\n", tiny_ret_to_str(ret));
+        printf("AccessoryHost_Initialize FAILED: %d\n", TINY_RET_CODE(ret));
         return ret;
     }
 
@@ -184,7 +184,7 @@ static TinyRet _start(void)
     ret = AccessoryHost_Run(host);
     if (RET_FAILED(ret))
     {
-        printf("AccessoryHost_Initialize FAILED: %s\n", tiny_ret_to_str(ret));
+        printf("AccessoryHost_Initialize FAILED: %d\n", TINY_RET_CODE(ret));
         return ret;
     }
 
