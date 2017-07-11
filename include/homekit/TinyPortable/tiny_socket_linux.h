@@ -32,6 +32,8 @@
 TINY_BEGIN_DECLS
 
 
+#define tiny_socket_initialize()
+#define tiny_socket_finalize()
 #define tiny_select                 select
 #define tiny_socket_close           close
 #define tiny_socket                 socket
@@ -42,6 +44,7 @@ TINY_BEGIN_DECLS
 #define tiny_recv                   recv
 #define tiny_send                   send
 #define tiny_setsockopt             setsockopt
+#define tiny_recvfrom               recvfrom
 
 int tiny_socket_set_block(int fd, bool block);
 

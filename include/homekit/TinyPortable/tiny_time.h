@@ -29,6 +29,7 @@
         #include <time.h>
     #else
         #include <time.h>
+        #include <sys/time.h>
     #endif
 #endif
 
@@ -40,7 +41,10 @@ time_t tiny_time(time_t *t);
 
 int tiny_gettimeofday(struct timeval *tv, void *tz);
 
-//int tiny_getstrtime(char buf[], int len);
+#ifdef TINY_DEBUG
+int tiny_getstrtime(char buf[], int len);
+#endif
+
 //int tiny_sleep(int second);
 //int tiny_usleep(int usecond);
 

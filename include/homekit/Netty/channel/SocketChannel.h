@@ -51,7 +51,7 @@ TinyRet SocketChannel_Open(Channel *thiz, ChannelType type);
 
 NETTY_API
 TINY_LOR
-TinyRet SocketChannel_Bind(Channel *thiz, uint16_t port);
+TinyRet SocketChannel_Bind(Channel *thiz, uint16_t port, bool reuse);
 
 NETTY_API
 TINY_LOR

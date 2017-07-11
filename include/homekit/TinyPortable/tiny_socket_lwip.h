@@ -29,6 +29,8 @@
 TINY_BEGIN_DECLS
 
 
+#define tiny_socket_initialize()
+#define tiny_socket_finalize()
 #define tiny_select                 lwip_select
 #define tiny_socket_close           lwip_close
 #define tiny_socket                 lwip_socket
@@ -39,6 +41,7 @@ TINY_BEGIN_DECLS
 #define tiny_recv                   lwip_recv
 #define tiny_send                   lwip_send
 #define tiny_setsockopt             lwip_setsockopt
+#define tiny_recvfrom               lwip_recvfrom
 
 int tiny_socket_set_block(int fd, bool block);
 

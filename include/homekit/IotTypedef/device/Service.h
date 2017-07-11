@@ -31,8 +31,13 @@ struct _Service
 
 typedef struct _Service Service;
 
-TYPEDEF_API TINY_LOR Service* Service_New(void);
-TYPEDEF_API TINY_LOR void Service_Delete(Service *thiz);
+TYPEDEF_API
+TINY_LOR
+Service* Service_New(void);
+
+TYPEDEF_API
+TINY_LOR
+void Service_Delete(Service *thiz);
 
 
 TINY_END_DECLS

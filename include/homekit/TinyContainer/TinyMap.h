@@ -26,13 +26,19 @@
 TINY_BEGIN_DECLS
 
 
+typedef struct _TinyMapItem
+{
+    #define     MAX_KEY_LEN             32
+    char        key[MAX_KEY_LEN];
+    void      * value;
+} TinyMapItem;
+
 typedef struct _TinyMap
 {
     TinyList                            list;
     TinyContainerItemDeleteListener     data_delete_listener;
     void                              * data_delete_listener_ctx;
 } TinyMap;
-
 
 TINY_API
 TINY_LOR

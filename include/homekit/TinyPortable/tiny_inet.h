@@ -21,7 +21,8 @@
 #else
 	#ifdef WIN32
 		#include <Windows.h>
-	#else
+    #else
+		#include <netinet/in.h>
 		#include <arpa/inet.h>
 	#endif
 #endif

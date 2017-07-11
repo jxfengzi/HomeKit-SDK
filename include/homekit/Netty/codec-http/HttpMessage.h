@@ -277,7 +277,9 @@ void HttpMessage_SetVersion(HttpMessage *thiz, int major, int minor);
 //const char * HttpMessage_GetHeaderValueAt(HttpMessage * thiz, uint32_t index);
 
 /* for content */
-#define HttpMessage_IsContentFull(thiz)     (thiz->content.buf_size == thiz->content.data_size)
+NETTY_API
+TINY_LOR
+bool HttpMessage_IsContentFull(HttpMessage *thiz);
 
 //NETTY_API
 //TINY_LOR
