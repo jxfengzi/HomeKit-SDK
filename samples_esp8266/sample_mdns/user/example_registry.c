@@ -13,7 +13,7 @@
 #include <bootstrap/Bootstrap.h>
 #include <channel/multicast/MulticastChannel.h>
 #include <channel/SocketChannel.h>
-#include <DnsMessageCodec.h>
+#include <codec/DnsMessageCodec.h>
 #include <MdnsHandler.h>
 #include <MdnsConstant.h>
 
@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <lwip/lwip/sys.h>
 
 #define DEMO_WIFI_SSID      "airport-milink"
 #define DEMO_WIFI_PASSWORD  "milink123"
@@ -52,6 +53,14 @@
 // }
 
 ICACHE_FLASH_ATTR
+void tiny_print_stack_info(const char *tag, const char *function)
+{
+    unsigned portBASE_TYPE uxHighWaterMark;
+    uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
+    printf("[%s/%s] stack = %d]\n", tag, function, uxHighWaterMark);
+}
+
+ICACHE_FLASH_ATTR
 static void MdnsInitializer(Channel *channel, void *ctx)
 {
     ChannelHandler *handler = MdnsHandler();
@@ -66,10 +75,13 @@ static void MdnsInitializer(Channel *channel, void *ctx)
 ICACHE_FLASH_ATTR
 static void _start_registry(void *pvParameters)
 {
+    int i = 0;
     Channel *mdns = NULL;
     Bootstrap sb;
     ServiceInfo info;
     uint16_t port = 8080;
+
+    tiny_print_stack_info("registry", "_start_registry");
 
     ServiceInfo_Construct(&info);
     ServiceInfo_Initialize(&info, "hello", SERVICE_TYPE_HAP, "10.0.1.25", 8080);
@@ -114,8 +126,17 @@ static void _start_registry(void *pvParameters)
         return;
     }
 
+#if 0
     Bootstrap_Shutdown(&sb);
     Bootstrap_Dispose(&sb);
+    ServiceInfo_Dispose(&info);
+#endif
+
+    for (i = 0; i < 300; i++)
+    {
+        sys_msleep(1000 * 1);
+        printf("hello\n");
+    }
 }
 
 /******************************************************************************

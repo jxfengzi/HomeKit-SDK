@@ -12,6 +12,7 @@
 
 #include "hap/characteristics/On.h"
 
+TINY_LOR
 Property * On(PropertyOnGet onGet, PropertyOnSet onSet)
 {
     Property *thiz = Property_New();

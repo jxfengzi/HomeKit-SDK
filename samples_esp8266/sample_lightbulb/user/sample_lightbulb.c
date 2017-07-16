@@ -15,6 +15,13 @@
 #define DEMO_WIFI_PASSWORD  "milink123"
 
 ICACHE_FLASH_ATTR
+void tiny_print_mem_info(const char *tag, const char *function)
+{
+    printf("[%s/%s] stack = %d, free heap size: %d\n", tag, function,
+      uxTaskGetStackHighWaterMark(NULL), system_get_free_heap_size());
+}
+
+ICACHE_FLASH_ATTR
 static void print_version_info(void)
 {
     printf("HomeKit Lightbulb\n");
@@ -121,8 +128,9 @@ ICACHE_FLASH_ATTR
 static void MyAccessoryInitializer(DeviceConfig *thiz, void *ctx)
 {
     DeviceConfig_SetIp(thiz, "10.0.1.25");
-    DeviceConfig_SetName(thiz, "Ouyang");
-    DeviceConfig_SetId(thiz, "1C:BE:EE:01:01:07");
+    DeviceConfig_SetPort(thiz, 9090);
+    DeviceConfig_SetName(thiz, "OOO");
+    DeviceConfig_SetId(thiz, "18:FE:34:CE:22:15");
     DeviceConfig_SetModelName(thiz, "light");
     DeviceConfig_SetConfigurationNumber(thiz, 2);
     DeviceConfig_SetCurrentStateNumber(thiz, 1);
@@ -185,6 +193,7 @@ static void _start_accessory(void *pvParameters)
  * Parameters   : system event
  * Returns      : none
  *******************************************************************************/
+ICACHE_FLASH_ATTR
 static void wifi_event_handler_cb(System_Event_t * event)
 {
     if (event == NULL)
@@ -196,7 +205,7 @@ static void wifi_event_handler_cb(System_Event_t * event)
     {
         case EVENT_STAMODE_GOT_IP:
             printf("free heap size %d line %d \n", system_get_free_heap_size(), __LINE__);
-            xTaskCreate(_start_accessory, "start_accessory", 1024 * 4, NULL, 4, NULL);
+            xTaskCreate(_start_accessory, "start_accessory", 1024 * 3, NULL, 4, NULL);
             break;
 
         default:
@@ -213,6 +222,7 @@ static void wifi_event_handler_cb(System_Event_t * event)
  * Parameters   : task param
  * Returns      : none
  *******************************************************************************/
+ICACHE_FLASH_ATTR
 static void wifi_config(void *pvParameters)
 {
     struct ip_info ip_config;

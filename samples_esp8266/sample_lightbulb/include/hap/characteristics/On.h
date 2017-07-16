@@ -14,11 +14,13 @@
 #define __Characteristic_On_H__
 
 #include <device/Property.h>
-#include "tiny_base.h"
+#include <tiny_base.h>
+#include <tiny_lor.h>
 
 TINY_BEGIN_DECLS
 
 
+TINY_LOR
 Property * On(PropertyOnGet onGet, PropertyOnSet onSet);
 
 

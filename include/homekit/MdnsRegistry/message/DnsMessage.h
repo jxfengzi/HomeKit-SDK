@@ -156,6 +156,7 @@ typedef struct _DnsMessage
     TinyList          answers;
     TinyList          authorities;
     TinyList          additionals;
+    bool              unicast;
 } DnsMessage;
 
 

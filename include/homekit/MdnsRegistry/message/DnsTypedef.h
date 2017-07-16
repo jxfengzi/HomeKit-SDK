@@ -81,7 +81,7 @@ typedef enum _DnsRecordType
  * *              255 any class
  */
 
-typedef enum _DNSRecordClass
+typedef enum _DnsRecordClass
 {
     CLASS_IN            = 1,        // the Internet
     CLASS_CS            = 2,        // the CSNET class (Obsolete - used only for examples in some obsolete RFCs)
@@ -91,15 +91,15 @@ typedef enum _DNSRecordClass
     CLASS_FLUSH_IN      = 0x8001,   // flush bit and internet
     CLASS_NONE          = 254,      // Used in DNS UPDATE [RFC 2136]
     CLASS_ANY           = 255,      // any class
-} DNSRecordClass;
+} DnsRecordClass;
 
 
 #ifdef TINY_DEBUG
 const char * DnsRecordType_ToString(DnsRecordType v);
-const char * DNSRecordClass_ToString(DNSRecordClass v);
+const char * DnsRecordClass_ToString(DnsRecordClass v);
 #else
 #define DnsRecordType_ToString(t)   ""
-#define DNSRecordClass_ToString(t)  ""
+#define DnsRecordClass_ToString(t)  ""
 #endif
 
 TINY_END_DECLS

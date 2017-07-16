@@ -64,7 +64,7 @@ int main()
 
     MulticastChannel_Initialize(ssdp, SsdpInitializer, NULL);
 
-    if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.9", "239.255.255.250", 1900)))
+    if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.9", "239.255.255.250", 1900, false)))
     {
         printf("MulticastChannel_Join failed\n");
         return 0;

@@ -13,6 +13,7 @@
 #include "hap/services/Lightbulb.h"
 #include "hap/characteristics/On.h"
 
+TINY_LOR
 Service * Lightbulb(PropertyOnGet onGet, PropertyOnSet onSet)
 {
     Service *thiz = Service_New();

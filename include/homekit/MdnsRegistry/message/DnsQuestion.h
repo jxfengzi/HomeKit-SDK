@@ -69,7 +69,7 @@ typedef struct _DnsQuestion
 {
     DnsName             name;
     DnsRecordType       type;
-    DNSRecordClass      clazz;
+    DnsRecordClass      clazz;
     bool                unicast;
 } DnsQuestion;
 

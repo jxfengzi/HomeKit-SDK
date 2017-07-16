@@ -16,11 +16,14 @@
 #include "hap/accessories/DeskLamp.h"
 #include "hap/AccessoryHost.h"
 
+TINY_LOR
 static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
                                        DeviceConfig *config,
                                        PropertyOnGet onGet,
                                        PropertyOnSet onSet,
                                        DeviceIdentifyListener onIdentify);
+
+TINY_LOR
 static void AccessoryHost_Dispose(AccessoryHost *thiz);
 
 struct _AccessoryHost
@@ -29,6 +32,7 @@ struct _AccessoryHost
     Device            * device;
 };
 
+TINY_LOR
 AccessoryHost * AccessoryHost_New(DeviceConfig *config,
                                   PropertyOnGet onGet,
                                   PropertyOnSet onSet,
@@ -59,6 +63,7 @@ AccessoryHost * AccessoryHost_New(DeviceConfig *config,
     return thiz;
 }
 
+TINY_LOR
 static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
                                        DeviceConfig *config,
                                        PropertyOnGet onGet,
@@ -97,6 +102,7 @@ static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
     return ret;
 }
 
+TINY_LOR
 static void AccessoryHost_Dispose(AccessoryHost *thiz)
 {
     RETURN_IF_FAIL(thiz);
@@ -110,6 +116,7 @@ static void AccessoryHost_Dispose(AccessoryHost *thiz)
     ThingManager_Dispose(&thiz->manager);
 }
 
+TINY_LOR
 void AccessoryHost_Delete(AccessoryHost *thiz)
 {
     RETURN_IF_FAIL(thiz);
@@ -118,11 +125,13 @@ void AccessoryHost_Delete(AccessoryHost *thiz)
     free(thiz);
 }
 
+TINY_LOR
 TinyRet AccessoryHost_Initialize(AccessoryHost *thiz, HapPersistence *persistence)
 {
     return ThingManager_SetRuntimeImpl(&thiz->manager, HapAccessoryImpl_GetInstance(persistence));
 }
 
+TINY_LOR
 TinyRet AccessoryHost_Run(AccessoryHost *thiz)
 {
     RETURN_VAL_IF_FAIL(thiz, TINY_RET_E_ARG_NULL);
@@ -130,6 +139,7 @@ TinyRet AccessoryHost_Run(AccessoryHost *thiz)
     return ThingManager_Run(&thiz->manager, thiz->device);
 }
 
+TINY_LOR
 TinyRet AccessoryHost_Stop(AccessoryHost *thiz)
 {
     RETURN_VAL_IF_FAIL(thiz, TINY_RET_E_ARG_NULL);
@@ -137,6 +147,7 @@ TinyRet AccessoryHost_Stop(AccessoryHost *thiz)
     return ThingManager_Stop(&thiz->manager);
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetBoolValue(AccessoryHost *thiz, uint16_t aid, uint16_t iid, bool value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -156,6 +167,7 @@ TinyRet AccessoryHost_SetBoolValue(AccessoryHost *thiz, uint16_t aid, uint16_t i
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetUint8Value(AccessoryHost *thiz, uint16_t aid, uint16_t iid, uint8_t value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -175,6 +187,7 @@ TinyRet AccessoryHost_SetUint8Value(AccessoryHost *thiz, uint16_t aid, uint16_t 
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetUint16Value(AccessoryHost *thiz, uint16_t aid, uint16_t iid, uint16_t value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -194,6 +207,7 @@ TinyRet AccessoryHost_SetUint16Value(AccessoryHost *thiz, uint16_t aid, uint16_t
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetUint32Value(AccessoryHost *thiz, uint16_t aid, uint16_t iid, uint32_t value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -213,6 +227,7 @@ TinyRet AccessoryHost_SetUint32Value(AccessoryHost *thiz, uint16_t aid, uint16_t
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetUint64Value(AccessoryHost *thiz, uint16_t aid, uint16_t iid, uint64_t value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -232,6 +247,7 @@ TinyRet AccessoryHost_SetUint64Value(AccessoryHost *thiz, uint16_t aid, uint16_t
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetIntValue(AccessoryHost *thiz, uint16_t aid, uint16_t iid, int32_t value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -251,6 +267,7 @@ TinyRet AccessoryHost_SetIntValue(AccessoryHost *thiz, uint16_t aid, uint16_t ii
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetFloatValue(AccessoryHost *thiz, uint16_t aid, uint16_t iid, float value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -270,6 +287,7 @@ TinyRet AccessoryHost_SetFloatValue(AccessoryHost *thiz, uint16_t aid, uint16_t 
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetStringValue(AccessoryHost *thiz, uint16_t aid, uint16_t iid, const char * value)
 {
     TinyRet ret = TINY_RET_OK;
@@ -289,6 +307,7 @@ TinyRet AccessoryHost_SetStringValue(AccessoryHost *thiz, uint16_t aid, uint16_t
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SetTlv8Value(AccessoryHost *thiz, uint16_t aid, uint16_t iid, const char * value, uint32_t len)
 {
     TinyRet ret = TINY_RET_OK;
@@ -308,6 +327,7 @@ TinyRet AccessoryHost_SetTlv8Value(AccessoryHost *thiz, uint16_t aid, uint16_t i
     return ret;
 }
 
+TINY_LOR
 TinyRet AccessoryHost_SendEvents(AccessoryHost *thiz)
 {
     RETURN_VAL_IF_FAIL(thiz, 0);

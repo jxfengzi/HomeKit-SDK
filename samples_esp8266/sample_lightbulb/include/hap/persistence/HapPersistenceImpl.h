@@ -13,12 +13,14 @@
 #ifndef __HAP_PERSISTENCE_IMPL_H__
 #define __HAP_PERSISTENCE_IMPL_H__
 
-#include "tiny_base.h"
+#include <tiny_base.h>
+#include <tiny_lor.h>
 #include <HapPersistence.h>
 
 TINY_BEGIN_DECLS
 
 
+TINY_LOR
 HapPersistence * HapPersistenceImpl_GetInstance(void);
 
 

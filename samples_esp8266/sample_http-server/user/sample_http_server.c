@@ -41,7 +41,7 @@ static TinyRet init_http_server(Channel *server, uint16_t port)
             break;
         }
 
-        ret = SocketChannel_Bind(server, port);
+        ret = SocketChannel_Bind(server, port, false);
         if (RET_FAILED(ret))
         {
             printf("SocketChannel_Bind failed: %d\n", TINY_RET_CODE(ret));

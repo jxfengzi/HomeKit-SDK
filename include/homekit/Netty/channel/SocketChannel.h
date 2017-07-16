@@ -73,6 +73,12 @@ TinyRet SocketChannel_LeaveGroup(Channel *thiz);
 //NETTY_API void SocketChannel_StartRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
 //NETTY_API void SocketChannel_NextRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
 
+TINY_LOR
+void SocketChannel_OnActive(Channel *thiz);
+
+TINY_LOR
+void SocketChannel_OnInactive(Channel *thiz);
+
 NETTY_API
 TINY_LOR
 void SocketChannel_StartRead(Channel *thiz, ChannelDataType type, void *data, uint32_t len);

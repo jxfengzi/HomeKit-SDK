@@ -23,70 +23,6 @@
 
 TINY_BEGIN_DECLS
 
-
-///**
-// * https://tools.ietf.org/html/rfc1035
-// * 3.2. RR definitions
-// * 3.2.1. Format
-// * All RRs have the same top level format shown below:
-// *                                   1  1  1  1  1  1
-// *     0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *   |                                               |
-// *   /                                               /
-// *   /                      NAME                     /
-// *   |                                               |
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *   |                      TYPE                     |
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *   |                     CLASS                     |
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *   |                      TTL                      |
-// *   |                                               |
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *   |                   RDLENGTH                    |
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
-// *   /                     RDATA                     /
-// *   /                                               /
-// *   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-// *
-// *
-// * where:
-// *
-// * NAME            an owner name, i.e., the name of the node to which this
-// *                 resource record pertains.
-// *
-// * TYPE            two octets containing one of the RR TYPE codes.
-// *
-// * CLASS           two octets containing one of the RR CLASS codes.
-// *
-// * TTL             a 32 bit signed integer that specifies the time interval
-// *                 that the resource record may be cached before the source
-// *                 of the information should again be consulted.  Zero
-// *                 values are interpreted to mean that the RR can only be
-// *                 used for the transaction in progress, and should not be
-// *                 cached.  For example, SOA records are always distributed
-// *                 with a zero TTL to prohibit caching.  Zero values can
-// *                 also be used for extremely volatile data.
-// *
-// * RDLENGTH        an unsigned 16 bit integer that specifies the length in
-// *                 octets of the RDATA field.
-// *
-// * RDATA           a variable length string of octets that describes the
-// *                 resource.  The format of this information varies
-// *                 according to the TYPE and CLASS of the resource record.
-// *
-// */
-//typedef struct _RR
-//{
-//    const char        * name;
-//    uint16_t            type;
-//    uint16_t            clazz;
-//    uint32_t            ttl;
-//    uint16_t            rdlength;
-//    uint8_t           * rdata;
-//} RR;
-
 /**
  * https://tools.ietf.org/html/rfc1035
  * 4.1.3. DnsRecord record format
@@ -157,6 +93,7 @@ typedef struct _DataTxt
 {
     uint8_t           * value;
     uint32_t            length;
+    uint32_t            offset;
 } DataTxt;
 
 typedef union _ResourceData
@@ -173,7 +110,7 @@ typedef struct _DnsRecord
 {
     DnsName             name;
     DnsRecordType       type;
-    DNSRecordClass      clazz;
+    DnsRecordClass      clazz;
     uint32_t            ttl;
     ResourceData        data;
     bool                cacheFlush;
@@ -186,10 +123,25 @@ TINY_LOR
 void DnsRecord_Delete(DnsRecord *thiz);
 
 TINY_LOR
+TinyRet DnsRecord_Construct(DnsRecord *thiz);
+
+TINY_LOR
+void DnsRecord_Dispose(DnsRecord *thiz);
+
+TINY_LOR
 TinyRet DnsRecord_Copy(DnsRecord *thiz, DnsRecord *other);
 
 TINY_LOR
-TinyRet DnsRecord_Initialize(DnsRecord *thiz, DnsRecordType type, ServiceInfo *info);
+DnsRecord * DnsRecord_NewPTR(DnsName *name, DnsRecordClass clazz, uint32_t ttl, DnsName *ptr);
+
+TINY_LOR
+DnsRecord * DnsRecord_NewA(DnsName *name, DnsRecordClass clazz, uint32_t ttl, uint32_t ip);
+
+TINY_LOR
+DnsRecord * DnsRecord_NewSRV(DnsName *name, DnsRecordClass clazz, uint32_t ttl, uint16_t port, DnsName *host);
+
+TINY_LOR
+DnsRecord * DnsRecord_NewTXT(DnsName *name, DnsRecordClass clazz, uint32_t ttl, TinyMap *txt);
 
 TINY_LOR
 int DnsRecord_Parse(DnsRecord *thiz, const uint8_t *buf, uint32_t len, uint32_t offset);

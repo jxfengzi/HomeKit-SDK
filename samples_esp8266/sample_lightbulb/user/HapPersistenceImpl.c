@@ -19,6 +19,7 @@ static uint8_t __publicKey[ED25519_PUBLIC_KEY_LENGTH];
 static uint8_t __id[ENTITY_IDENTIFIER_LENGTH];
 static uint8_t __ltpk[ED25519_PUBLIC_KEY_LENGTH];
 
+TINY_LOR
 static TinyRet Storage_Initialize(void)
 {
     printf("Storage_Initialize\n");
@@ -33,6 +34,7 @@ static TinyRet Storage_Initialize(void)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_Destroy(void)
 {
     printf("Storage_Destroy\n");
@@ -40,6 +42,7 @@ static TinyRet Storage_Destroy(void)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_SaveKeyPair(Ed25519KeyPair *keys)
 {
     printf("Storage_SaveKeyPair\n");
@@ -51,6 +54,7 @@ static TinyRet Storage_SaveKeyPair(Ed25519KeyPair *keys)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_LoadKeyPair(Ed25519KeyPair *keys)
 {
     printf("Storage_LoadKeyPair\n");
@@ -68,6 +72,7 @@ static TinyRet Storage_LoadKeyPair(Ed25519KeyPair *keys)
     return TINY_RET_E_NOT_FOUND;
 }
 
+TINY_LOR
 static TinyRet Storage_CleanLTPK(void)
 {
     printf("Storage_CleanLTPK\n");
@@ -78,6 +83,7 @@ static TinyRet Storage_CleanLTPK(void)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_SaveLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
 {
     printf("Storage_SaveLTPK\n");
@@ -88,6 +94,7 @@ static TinyRet Storage_SaveLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_RemoveLTPK(EntityIdentifier *id)
 {
     printf("Storage_RemoveLTPK\n");
@@ -98,6 +105,7 @@ static TinyRet Storage_RemoveLTPK(EntityIdentifier *id)
     return TINY_RET_OK;
 }
 
+TINY_LOR
 static TinyRet Storage_LoadLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
 {
     printf("Storage_LoadLTPK\n");
@@ -112,6 +120,7 @@ static TinyRet Storage_LoadLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
     return TINY_RET_E_NOT_FOUND;
 }
 
+TINY_LOR
 uint32_t Storage_GetLTPKCount(void)
 {
     printf("Storage_GetLTPKCount\n");
@@ -119,6 +128,7 @@ uint32_t Storage_GetLTPKCount(void)
     return 1;
 }
 
+TINY_LOR
 TinyRet Storage_LoadLTPKAt(int index, EntityIdentifier *id, ED25519PublicKey *LTPK)
 {
     printf("Storage_LoadLTPKAt: %d\n", index);
@@ -142,6 +152,7 @@ static HapPersistence _impl =
                 .LoadLTPKAt     = Storage_LoadLTPKAt,
         };
 
+TINY_LOR
 HapPersistence * HapPersistenceImpl_GetInstance(void)
 {
     return &_impl;

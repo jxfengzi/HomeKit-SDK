@@ -13,6 +13,7 @@
 #include "hap/accessories/DeskLamp.h"
 #include "hap/services/Lightbulb.h"
 
+TINY_LOR
 Accessory * DeskLamp(PropertyOnGet onGet, PropertyOnSet onSet)
 {
     Accessory * thiz = Accessory_New();

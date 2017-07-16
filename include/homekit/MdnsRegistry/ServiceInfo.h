@@ -18,10 +18,12 @@
 TINY_BEGIN_DECLS
 
 
-#define SERVICE_TYPE_HTTP           "_http._tcp"
-#define SERVICE_TYPE_DACP           "_dacp._tcp"
-#define SERVICE_TYPE_AIRPLAY        "_airplay._tcp"
-#define SERVICE_TYPE_HAP            "_hap._tcp"
+//#define SERVICE_TYPE_HTTP           "_http._tcp"
+//#define SERVICE_TYPE_DACP           "_dacp._tcp"
+//#define SERVICE_TYPE_AIRPLAY        "_airplay._tcp"
+//#define SERVICE_TYPE_HAP            "_hap._tcp"
+
+#define SERVICE_TYPE_HAP            "._hap._tcp.local"
 
 #define MDNS_NAME_LEN   32
 #define MDNS_IP_LEN     32

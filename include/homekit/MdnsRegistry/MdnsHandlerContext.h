@@ -25,9 +25,15 @@ TINY_BEGIN_DECLS
 
 typedef struct _MdnsHandlerContext
 {
-    TinyList        txtRecords;
-    TinyList        srvRecords;
-    TinyList        ptrRecords;
+#ifdef MDNS_DISCOVERY
+    TinyList            observers;
+#endif
+
+    TinyList            dnssdRecords;
+    TinyList            aRecords;
+    TinyList            txtRecords;
+    TinyList            srvRecords;
+    TinyList            ptrRecords;
 } MdnsHandlerContext;
 
 TINY_LOR
@@ -49,10 +55,14 @@ TINY_LOR
 TinyRet MdnsHandlerContext_Unregister(MdnsHandlerContext *thiz, ServiceInfo *info);
 
 TINY_LOR
-void MdnsHandlerContext_Query(MdnsHandlerContext *thiz, DnsRecordType type, char *name, DnsMessage *response);
+TinyRet MdnsHandlerContext_MakeResponse(MdnsHandlerContext *thiz, DnsMessage *request, DnsMessage *response);
 
-//TINY_LOR
-//ServiceInfo * MdnsHandlerContext_Query(MdnsHandlerContext *thiz, const char *name, Type type);
+TINY_LOR
+TinyRet MdnsHandlerContext_MakeRequest(MdnsHandlerContext *thiz, DnsMessage *request);
+
+TINY_LOR
+TinyRet MdnsHandlerContext_MakeRequestByAnswers(MdnsHandlerContext *thiz, DnsMessage *request, TinyList *answers);
+
 
 
 TINY_END_DECLS

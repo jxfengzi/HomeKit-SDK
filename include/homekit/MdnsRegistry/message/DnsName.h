@@ -47,11 +47,26 @@ void DnsName_Dispose(DnsName *thiz);
 TINY_LOR
 uint32_t DnsName_Parse(DnsName *thiz, const uint8_t *buf, uint32_t len, uint32_t offset);
 
-/**
- * string must be: .aaa.bbb.ccc.local\0
- */
 TINY_LOR
-TinyRet DnsName_SetString(DnsName *thiz, const char *string);
+TinyRet DnsName_InitializeHost(DnsName *thiz, const char *name);
+
+TINY_LOR
+TinyRet DnsName_InitializeReverseIpv4Host(DnsName *thiz, uint32_t ip);
+
+TINY_LOR
+TinyRet DnsName_InitializeServiceHost(DnsName *thiz, const char *name);
+
+TINY_LOR
+TinyRet DnsName_InitializeServiceInstance(DnsName *thiz, const char *name, const char *type);
+
+TINY_LOR
+TinyRet DnsName_InitializeServiceType(DnsName *thiz, const char *type);
+
+TINY_LOR
+TinyRet DnsName_InitializeServiceDnssd(DnsName *thiz);
+
+TINY_LOR
+bool DnsName_IsServiceDnssd(DnsName *thiz);
 
 TINY_LOR
 TinyRet DnsName_Copy(DnsName *dst, DnsName *src);
