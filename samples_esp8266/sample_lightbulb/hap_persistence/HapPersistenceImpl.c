@@ -13,9 +13,6 @@
 #include "hap/persistence/HapPersistenceImpl.h"
 
 ICACHE_RODATA_ATTR
-static bool        __keypairSaved = true;
-
-ICACHE_RODATA_ATTR
 static uint8_t     __privateKey[ED25519_PRIVATE_KEY_LENGTH] = 
 {
     0xe1, 0x9c, 0x69, 0x12, 0xa9, 0x19, 0x9e, 0x39, 
@@ -43,8 +40,8 @@ typedef struct _ControllerInfo
     uint8_t     ltpk[ED25519_PUBLIC_KEY_LENGTH];
 } ControllerInfo;
 
-ICACHE_RODATA_ATTR
 static ControllerInfo info;
+static bool __keypairSaved = true;
 
 /* NOTICE---this is for 512KB spi flash.
  * you can change to other sector if you use other size spi flash. */
