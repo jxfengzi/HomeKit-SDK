@@ -15,6 +15,7 @@
 
 #include <tiny_base.h>
 #include <tiny_lor.h>
+#include <device/Device.h>
 #include <device/DeviceConfig.h>
 #include <controlled/PropertyOnControl.h>
 #include <controlled/DeviceIdentifyListener.h>
@@ -24,7 +25,12 @@
 TINY_BEGIN_DECLS
 
 
-struct _AccessoryHost;
+struct _AccessoryHost
+{
+    ThingManager        manager;
+    Device            * device;
+};
+
 typedef struct _AccessoryHost AccessoryHost;
 
 TINY_LOR
@@ -32,6 +38,15 @@ AccessoryHost * AccessoryHost_New(DeviceConfig *config, PropertyOnGet onGet, Pro
 
 TINY_LOR
 void AccessoryHost_Delete(AccessoryHost *thiz);
+
+TINY_LOR
+TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
+                                DeviceConfig *config,
+                                PropertyOnGet onGet,
+                                PropertyOnSet onSet,
+                                DeviceIdentifyListener onIdentify);
+TINY_LOR
+void AccessoryHost_Dispose(AccessoryHost *thiz);
 
 TINY_LOR
 TinyRet AccessoryHost_Initialize(AccessoryHost *thiz, HapPersistence *persistence);

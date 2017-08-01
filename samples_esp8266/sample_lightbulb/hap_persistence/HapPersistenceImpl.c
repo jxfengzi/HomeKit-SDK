@@ -12,24 +12,68 @@
 
 #include "hap/persistence/HapPersistenceImpl.h"
 
-static bool __keypairSaved;
-static uint8_t __privateKey[ED25519_PRIVATE_KEY_LENGTH];
-static uint8_t __publicKey[ED25519_PUBLIC_KEY_LENGTH];
+ICACHE_RODATA_ATTR
+static bool        __keypairSaved = true;
 
-static uint8_t __id[ENTITY_IDENTIFIER_LENGTH];
-static uint8_t __ltpk[ED25519_PUBLIC_KEY_LENGTH];
+ICACHE_RODATA_ATTR
+static uint8_t     __privateKey[ED25519_PRIVATE_KEY_LENGTH] = 
+{
+    0xe1, 0x9c, 0x69, 0x12, 0xa9, 0x19, 0x9e, 0x39, 
+    0xab, 0x8c, 0x71, 0xad, 0x4f, 0xbe, 0x39, 0xb1,
+    0x53, 0x84, 0x12, 0x98, 0x80, 0x0d, 0xa0, 0x10,
+    0xc3, 0x99, 0xbf, 0x83, 0x24, 0xd1, 0x48, 0x05,
+    0x9e, 0x4c, 0x4a, 0x38, 0x58, 0x43, 0xe4, 0xc3,
+    0xfa, 0x2d, 0xfb, 0x8c, 0x69, 0xb9, 0xcc, 0xd8,
+    0x39, 0x65, 0xea, 0xd8, 0xce, 0x5f, 0x76, 0x46,
+    0xdf, 0xb4, 0xbb, 0xbc, 0x86, 0x95, 0x8d, 0xd3
+};
+
+ICACHE_RODATA_ATTR
+static uint8_t     __publicKey[ED25519_PUBLIC_KEY_LENGTH] = 
+{
+    0x9e, 0x4c, 0x4a, 0x38, 0x58, 0x43, 0xe4, 0xc3, 
+    0xfa, 0x2d, 0xfb, 0x8c, 0x69, 0xb9, 0xcc, 0xd8, 
+    0x39, 0x65, 0xea, 0xd8, 0xce, 0x5f, 0x76, 0x46, 
+    0xdf, 0xb4, 0xbb, 0xbc, 0x86, 0x95, 0x8d, 0xd3
+}; 
+
+typedef struct _ControllerInfo
+{
+    uint8_t     id[ENTITY_IDENTIFIER_LENGTH];
+    uint8_t     ltpk[ED25519_PUBLIC_KEY_LENGTH];
+} ControllerInfo;
+
+ICACHE_RODATA_ATTR
+static ControllerInfo info;
+
+/* NOTICE---this is for 512KB spi flash.
+ * you can change to other sector if you use other size spi flash. */
+#define ESP_PARAM_START_SEC     0x3D
+
+TINY_LOR
+static void print_binary(const char *tag, const uint8_t *value, uint32_t length)
+{
+    int i = 0;
+
+    printf("[ %s:%d ] ", tag, length);
+
+    for (i = 0; i < length; ++i)
+    {
+        printf("%02x ", value[i]);
+    }
+    printf("\n");
+}
 
 TINY_LOR
 static TinyRet Storage_Initialize(void)
 {
     printf("Storage_Initialize\n");
 
-    __keypairSaved = false;
-    memset(__privateKey, 0, ED25519_PRIVATE_KEY_LENGTH);
-    memset(__publicKey, 0, ED25519_PUBLIC_KEY_LENGTH);
+    memset(&info, 0, sizeof(ControllerInfo));
 
-    memset(__id, 0, ENTITY_IDENTIFIER_LENGTH);
-    memset(__ltpk, 0, ED25519_PUBLIC_KEY_LENGTH);
+//    system_param_load(ESP_PARAM_START_SEC, 0, &info, sizeof(ControllerInfo));
+//    print_binary("ID", info.id, ENTITY_IDENTIFIER_LENGTH);
+//    print_binary("LTPK", info.ltpk, ED25519_PUBLIC_KEY_LENGTH);
 
     return TINY_RET_OK;
 }
@@ -77,8 +121,8 @@ static TinyRet Storage_CleanLTPK(void)
 {
     printf("Storage_CleanLTPK\n");
 
-    memset(__id, 0, ENTITY_IDENTIFIER_LENGTH);
-    memset(__ltpk, 0, ED25519_PUBLIC_KEY_LENGTH);
+    memset(info.id, 0, ENTITY_IDENTIFIER_LENGTH);
+    memset(info.ltpk, 0, ED25519_PUBLIC_KEY_LENGTH);
 
     return TINY_RET_OK;
 }
@@ -86,10 +130,13 @@ static TinyRet Storage_CleanLTPK(void)
 TINY_LOR
 static TinyRet Storage_SaveLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
 {
-    printf("Storage_SaveLTPK\n");
+    printf("Storage_SaveLTPK: %s\n", id->value);
 
-    memcpy(__id, id->value, id->length);
-    memcpy(__ltpk, LTPK->value, LTPK->length);
+    memset(&info, 0, sizeof(ControllerInfo));
+    memcpy(info.id, id->value, id->length);
+    memcpy(info.ltpk, LTPK->value, LTPK->length);
+
+//    system_param_save_with_protect(ESP_PARAM_START_SEC, &info, sizeof(ControllerInfo));
 
     return TINY_RET_OK;
 }
@@ -99,8 +146,8 @@ static TinyRet Storage_RemoveLTPK(EntityIdentifier *id)
 {
     printf("Storage_RemoveLTPK\n");
 
-    memset(__id, 0, ENTITY_IDENTIFIER_LENGTH);
-    memset(__ltpk, 0, ED25519_PUBLIC_KEY_LENGTH);
+    memset(info.id, 0, ENTITY_IDENTIFIER_LENGTH);
+    memset(info.ltpk, 0, ED25519_PUBLIC_KEY_LENGTH);
 
     return TINY_RET_OK;
 }
@@ -108,14 +155,18 @@ static TinyRet Storage_RemoveLTPK(EntityIdentifier *id)
 TINY_LOR
 static TinyRet Storage_LoadLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
 {
-    printf("Storage_LoadLTPK\n");
+    printf("Storage_LoadLTPK: %s\n", id->value);
+    printf("id: %s\n", info.id);
 
-    if (strncmp((const char *)__id, (const char *)(id->value), id->length) == 0)
+    if (strncmp((const char *)info.id, (const char *)(id->value), id->length) == 0)
     {
-        memcpy(LTPK->value, __ltpk, ED25519_PUBLIC_KEY_LENGTH);
+        memcpy(LTPK->value, info.ltpk, ED25519_PUBLIC_KEY_LENGTH);
         LTPK->length = ED25519_PUBLIC_KEY_LENGTH;
+        printf("LoadLTPK OK\n");
         return TINY_RET_OK;
     }
+
+    printf("LoadLTPK FAILED\n");
 
     return TINY_RET_E_NOT_FOUND;
 }
@@ -133,8 +184,9 @@ TinyRet Storage_LoadLTPKAt(int index, EntityIdentifier *id, ED25519PublicKey *LT
 {
     printf("Storage_LoadLTPKAt: %d\n", index);
 
-    memcpy(LTPK->value, __ltpk, ED25519_PUBLIC_KEY_LENGTH);
+    memcpy(LTPK->value, info.ltpk, ED25519_PUBLIC_KEY_LENGTH);
     LTPK->length = ED25519_PUBLIC_KEY_LENGTH;
+
     return TINY_RET_OK;
 }
 

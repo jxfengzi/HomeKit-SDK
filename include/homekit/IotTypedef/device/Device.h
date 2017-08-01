@@ -27,7 +27,6 @@ TINY_BEGIN_DECLS
 
 struct _Device
 {
-//    uint16_t                    ref;
     DeviceConfig                config;
     TinyList                    accessories;
     TinyList                    changedObservers;

@@ -90,9 +90,9 @@ struct _Channel
     void                          * ctx;
 };
 
-#define Channel_IsActive(thiz)      (thiz->fd >= 0)
-#define Channel_IsClosed(thiz)      (thiz->fd < 0)
-#define Channel_Close(thiz)         {tiny_socket_close(thiz->fd); thiz->fd = -1;}
+#define Channel_IsActive(thiz)      ((thiz)->fd >= 0)
+#define Channel_IsClosed(thiz)      ((thiz)->fd < 0)
+#define Channel_Close(thiz)         {tiny_socket_close((thiz)->fd); (thiz)->fd = -1;}
 
 void ChannelAddress_Set(ChannelAddress *thiz, ChannelType type, uint32_t address, uint16_t port);
 

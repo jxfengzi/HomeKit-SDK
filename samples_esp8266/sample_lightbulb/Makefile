@@ -21,8 +21,9 @@ ifndef PDIR # {
 GEN_IMAGES= eagle.app.v6.out
 GEN_BINS= eagle.app.v6.bin
 SPECIAL_MKTARGETS=$(APP_MKTARGETS)
-SUBDIRS=    \
-	user
+SUBDIRS= hap_accessory      \
+         hap_persistence    \
+         hap_user
 
 endif # } PDIR
 
@@ -47,7 +48,9 @@ ifeq ($(FLAVOR),release)
 endif
 
 COMPONENTS_eagle.app.v6 = \
-	user/libuser.a
+	hap_accessory/libhap_accessory.a        \
+	hap_persistence/libhap_persistence.a    \
+	hap_user/libhap_user.a
 
 LINKFLAGS_eagle.app.v6 = \
 	-L$(SDK_PATH)/lib        \
@@ -81,6 +84,7 @@ LINKFLAGS_eagle.app.v6 = \
 	-lwpa	\
 	-lwps		\
     -lhomekit   \
+    -ldriver    \
 	$(DEP_LIBS_eagle.app.v6)					\
 	-Wl,--end-group
 

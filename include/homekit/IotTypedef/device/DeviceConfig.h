@@ -21,6 +21,27 @@
 TINY_BEGIN_DECLS
 
 
+#define SRP_salt_LEN            16
+#define SRP_v_LEN               384
+#define SRP_b_LEN               32
+#define SRP_B_LEN               384
+
+typedef struct _SRPPrecomputed
+{
+    bool        valid;
+    uint8_t     s[SRP_salt_LEN];
+    uint8_t     v[SRP_v_LEN];
+    uint8_t     b[SRP_b_LEN];
+    uint8_t     B[SRP_B_LEN];
+
+#if 0
+    const char *s;
+    const char *v;
+    const char *b;
+    const char *B;
+#endif
+} SRPPrecomputed;
+
 typedef struct _DeviceConfig
 {
     char                ip[TINY_IP_LEN + 1];
@@ -92,6 +113,11 @@ typedef struct _DeviceConfig
      * Protocol version string <major>.<minor>. Required if value is not "1.0"
      */
     uint32_t            protocolVersion;
+
+    /**
+     * SRP precomputed values: salt/v/b/B
+     */
+    SRPPrecomputed      precomputed;
 } DeviceConfig;
 
 typedef void (* DeviceConfigurationInitializer)(DeviceConfig *thiz, void *ctx);
@@ -121,6 +147,10 @@ void DeviceConfig_SetIp(DeviceConfig *thiz, const char *ip);
 
 TYPEDEF_API
 TINY_LOR
+void DeviceConfig_SetIpByInt(DeviceConfig *thiz, uint32_t ip);
+
+TYPEDEF_API
+TINY_LOR
 void DeviceConfig_SetPort(DeviceConfig *thiz, uint16_t port);
 
 TYPEDEF_API
@@ -130,6 +160,10 @@ void DeviceConfig_SetName(DeviceConfig *thiz, const char *name);
 TYPEDEF_API
 TINY_LOR
 void DeviceConfig_SetId(DeviceConfig *thiz, const char *id);
+
+TYPEDEF_API
+TINY_LOR
+void DeviceConfig_SetIdByInt(DeviceConfig *thiz, const uint8_t *id, uint32_t len);
 
 TYPEDEF_API
 TINY_LOR
@@ -153,7 +187,7 @@ void DeviceConfig_SetCategoryIdentifier(DeviceConfig *thiz, uint32_t value);
 
 TYPEDEF_API
 TINY_LOR
-void DeviceConfig_SetPinCode(DeviceConfig *thiz, const char *pin);
+void DeviceConfig_SetPinCode(DeviceConfig *thiz, const char *pin, SRPPrecomputed *precomputed);
 
 
 TINY_END_DECLS

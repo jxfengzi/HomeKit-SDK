@@ -84,7 +84,7 @@ static void _start_registry(void *pvParameters)
     tiny_print_stack_info("registry", "_start_registry");
 
     ServiceInfo_Construct(&info);
-    ServiceInfo_Initialize(&info, "hello", SERVICE_TYPE_HAP, "10.0.1.25", 8080);
+    ServiceInfo_Initialize(&info, "hello", SERVICE_TYPE_HAP, "10.0.1.47", 8080);
     TinyMap_Insert(&info.txt, "pv", "1.0");                 // protocol version
     TinyMap_Insert(&info.txt, "sf", "1");                   // discoverable ? "1" : "0"
     TinyMap_Insert(&info.txt, "id", "AA:BB:CC:00:11:22");
@@ -103,7 +103,7 @@ static void _start_registry(void *pvParameters)
 
     MulticastChannel_Initialize(mdns, MdnsInitializer, &info);
 
-    if (RET_FAILED(MulticastChannel_Join(mdns, "10.0.1.25", MDNS_GROUP, MDNS_PORT, false)))
+    if (RET_FAILED(MulticastChannel_Join(mdns, info.ip, MDNS_GROUP, MDNS_PORT, false)))
     {
         printf("MulticastChannel_Join failed\n");
     }

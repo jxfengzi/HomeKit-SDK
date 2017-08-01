@@ -28,6 +28,8 @@ TINY_BEGIN_DECLS
 #define tiny_setsockopt             setsockopt
 #define tiny_accept                 accept
 #define tiny_recvfrom               recvfrom
+#define tiny_sendto                 sendto
+#define tiny_connect                connect
 
 void tiny_socket_initialize();
 

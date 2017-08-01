@@ -25,13 +25,20 @@
 TINY_BEGIN_DECLS
 
 
+#define CHANNEL_RECV_BUF_SIZE    (1460)
+
+
 NETTY_API
 TINY_LOR
 Channel * SocketChannel_New(void);
 
 NETTY_API
 TINY_LOR
-void SocketChannel_Initialize(Channel *thiz, const char *ip, int fd, uint16_t port, ChannelInitializer initializer, void *ctx);
+void SocketChannel_Delete(Channel *thiz);
+
+//NETTY_API
+//TINY_LOR
+//void SocketChannel_Initialize(Channel *thiz, ChannelInitializer initializer, void *ctx);
 
 NETTY_API
 TINY_LOR
@@ -69,9 +76,9 @@ NETTY_API
 TINY_LOR
 TinyRet SocketChannel_LeaveGroup(Channel *thiz);
 
-// TODO: emdns需要非const数据
-//NETTY_API void SocketChannel_StartRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
-//NETTY_API void SocketChannel_NextRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
+NETTY_API
+TINY_LOR
+TinyRet SocketChannel_Connect(Channel *thiz, const char *ip, uint8_t port, uint32_t timeout);
 
 TINY_LOR
 void SocketChannel_OnActive(Channel *thiz);
@@ -81,11 +88,11 @@ void SocketChannel_OnInactive(Channel *thiz);
 
 NETTY_API
 TINY_LOR
-void SocketChannel_StartRead(Channel *thiz, ChannelDataType type, void *data, uint32_t len);
+void SocketChannel_StartRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
 
 NETTY_API
 TINY_LOR
-void SocketChannel_NextRead(Channel *thiz, ChannelDataType type, void *data, uint32_t len);
+void SocketChannel_NextRead(Channel *thiz, ChannelDataType type, const void *data, uint32_t len);
 
 NETTY_API
 TINY_LOR

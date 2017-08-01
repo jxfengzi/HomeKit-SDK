@@ -17,22 +17,6 @@
 #include "hap/AccessoryHost.h"
 
 TINY_LOR
-static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
-                                       DeviceConfig *config,
-                                       PropertyOnGet onGet,
-                                       PropertyOnSet onSet,
-                                       DeviceIdentifyListener onIdentify);
-
-TINY_LOR
-static void AccessoryHost_Dispose(AccessoryHost *thiz);
-
-struct _AccessoryHost
-{
-    ThingManager        manager;
-    Device            * device;
-};
-
-TINY_LOR
 AccessoryHost * AccessoryHost_New(DeviceConfig *config,
                                   PropertyOnGet onGet,
                                   PropertyOnSet onSet,
@@ -64,11 +48,11 @@ AccessoryHost * AccessoryHost_New(DeviceConfig *config,
 }
 
 TINY_LOR
-static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
-                                       DeviceConfig *config,
-                                       PropertyOnGet onGet,
-                                       PropertyOnSet onSet,
-                                       DeviceIdentifyListener onIdentify)
+TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
+                                DeviceConfig *config,
+                                PropertyOnGet onGet,
+                                PropertyOnSet onSet,
+                                DeviceIdentifyListener onIdentify)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -103,7 +87,7 @@ static TinyRet AccessoryHost_Construct(AccessoryHost *thiz,
 }
 
 TINY_LOR
-static void AccessoryHost_Dispose(AccessoryHost *thiz)
+void AccessoryHost_Dispose(AccessoryHost *thiz)
 {
     RETURN_IF_FAIL(thiz);
 

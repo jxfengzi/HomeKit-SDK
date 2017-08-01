@@ -15,7 +15,8 @@
 #ifndef __TINY_TIME_H__
 #define __TINY_TIME_H__
 
-#include "tiny_typedef.h"
+#include <tiny_typedef.h>
+#include <tiny_lor.h>
 
 #ifdef ESP
     #if LWIP_TIMEVAL_PRIVATE
@@ -36,9 +37,7 @@
 TINY_BEGIN_DECLS
 
 
-time_t tiny_time(time_t *t);
-//long tiny_time(void *t);
-
+TINY_LOR
 int tiny_gettimeofday(struct timeval *tv, void *tz);
 
 #ifdef TINY_DEBUG
