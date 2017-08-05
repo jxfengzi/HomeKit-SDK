@@ -3,6 +3,7 @@
 #include "hap/persistence/HapPersistenceImpl.h"
 #include "hap/AccessoryCategoryIdentifier.h"
 #include "hap/AccessoryHost.h"
+#include "hap/wac/Wac.h"
 
 #include "esp_common.h"
 #include "gpio.h"
@@ -15,6 +16,8 @@
 
 #define DEMO_WIFI_SSID      "airport-milink"
 #define DEMO_WIFI_PASSWORD  "milink123"
+//#define DEMO_WIFI_SSID      "ABOX-PW"
+//#define DEMO_WIFI_PASSWORD  "panyan0202"
 
 ICACHE_FLASH_ATTR
 void tiny_print_mem_info(const char *tag, const char *function)
@@ -262,7 +265,7 @@ static void _start_accessory(void *pvParameters)
     TinyRet ret = TINY_RET_OK;
     AccessoryHost *host;
     DeviceConfig config;
- 
+
     print_version_info();
 
     // 1. init device configuration
@@ -415,6 +418,20 @@ void user_init(void)
 {
     printf("SDK version:%s\n", system_get_sdk_version());
 
-    wifi_set_event_handler_cb(wifi_event_handler_cb);
-    xTaskCreate(wifi_config, "wfcf", 512, NULL, 4, NULL);
+    /**
+     * 读取参数
+     *   1. 如果有AP信息, 开始连接AP. 如果连接3次失败, 则进入AP模式.
+     *   2. 如果没有AP, 进入AP模式. 如果收到配置请求, 写入AP信息后重启.
+     */
+#if 0
+    if (read_ap_configuration())
+    {
+        wifi_set_event_handler_cb(wifi_event_handler_cb);
+        xTaskCreate(wifi_config, "wfcf", 512, NULL, 4, NULL);
+    }
+    else
+#endif
+    {
+        hap_wac_init();
+    }
 }

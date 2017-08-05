@@ -23,7 +23,8 @@ GEN_BINS= eagle.app.v6.bin
 SPECIAL_MKTARGETS=$(APP_MKTARGETS)
 SUBDIRS= hap_accessory      \
          hap_persistence    \
-         hap_user
+         hap_user           \
+         hap_wac
 
 endif # } PDIR
 
@@ -50,7 +51,8 @@ endif
 COMPONENTS_eagle.app.v6 = \
 	hap_accessory/libhap_accessory.a        \
 	hap_persistence/libhap_persistence.a    \
-	hap_user/libhap_user.a
+	hap_wac/libhap_wac.a                    \
+	hap_user/libhap_user.a                  
 
 LINKFLAGS_eagle.app.v6 = \
 	-L$(SDK_PATH)/lib        \
