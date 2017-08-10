@@ -3,7 +3,8 @@
 #include "hap/persistence/HapPersistenceImpl.h"
 #include "hap/AccessoryCategoryIdentifier.h"
 #include "hap/AccessoryHost.h"
-#include "hap/wac/Wac.h"
+#include "hap/wdc/Wdc.h"
+#include "hap/wdc/WdcInfo.h"
 
 #include "esp_common.h"
 #include "gpio.h"
@@ -14,10 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define DEMO_WIFI_SSID      "airport-milink"
-#define DEMO_WIFI_PASSWORD  "milink123"
-//#define DEMO_WIFI_SSID      "ABOX-PW"
-//#define DEMO_WIFI_PASSWORD  "panyan0202"
+static WdcInfo wdcInfo;
 
 ICACHE_FLASH_ATTR
 void tiny_print_mem_info(const char *tag, const char *function)
@@ -91,13 +89,51 @@ static void OnIdentify(void)
 }
 
 // GPIO12
-#if 0
+#if 1
 #define LED_IO_NUM   12
 #define LED_IO_PIN   GPIO_Pin_12
 #else
-#define LED_IO_NUM   10
-#define LED_IO_PIN   GPIO_Pin_10
+#define LED_IO_NUM   8
+#define LED_IO_PIN   GPIO_Pin_8
 #endif
+
+ICACHE_FLASH_ATTR
+static int get_gpio(void)
+{
+#if 1
+    GPIO_ConfigTypeDef cfg;
+    cfg.GPIO_IntrType = GPIO_PIN_INTR_NEGEDGE;
+    cfg.GPIO_Mode = GPIO_Mode_Input;
+    cfg.GPIO_Pin = LED_IO_PIN;
+    cfg.GPIO_Pullup = GPIO_PullUp_EN;
+    gpio_config(&cfg);
+
+    return GPIO_INPUT_GET(LED_IO_NUM);
+#else
+    return GPIO_INPUT_GET(LED_IO_NUM);
+#endif
+}
+
+ICACHE_FLASH_ATTR
+static void set_gpio(int value)
+{
+    printf("[ TURN %s ] \n", value == 1 ? "ON" : "OFF");
+
+#if 1
+    // PW
+    GPIO_ConfigTypeDef cfg;
+    cfg.GPIO_IntrType = GPIO_PIN_INTR_DISABLE;
+    cfg.GPIO_Mode = GPIO_Mode_Output;
+    cfg.GPIO_Pin = LED_IO_PIN;
+    cfg.GPIO_Pullup = GPIO_PullUp_DIS;
+    gpio_config(&cfg);
+
+    GPIO_OUTPUT_SET(LED_IO_NUM, value);
+
+#else
+    GPIO_OUTPUT_SET(LED_IO_NUM, value);
+#endif
+}
 
 ICACHE_FLASH_ATTR
 static void OnCharacteristicGet(Property *property)
@@ -108,18 +144,9 @@ static void OnCharacteristicGet(Property *property)
     {
         // on
         case 9:
-            {
-                GPIO_ConfigTypeDef cfg;
-                cfg.GPIO_IntrType = GPIO_PIN_INTR_NEGEDGE;
-                cfg.GPIO_Mode = GPIO_Mode_Input;
-                cfg.GPIO_Pin = LED_IO_PIN;
-                cfg.GPIO_Pullup = GPIO_PullUp_EN;
-                gpio_config(&cfg);
-
-                property->data.value.boolValue.value = GPIO_INPUT_GET(LED_IO_NUM) == 1;
-                printf("[ SWITCH STATUS ] %s\n", property->data.value.boolValue.value ? "ON" : "OFF");
-                break;
-            }
+            property->data.value.boolValue.value = (get_gpio() == 1);
+            printf("[ SWITCH STATUS ] %s\n", property->data.value.boolValue.value ? "ON" : "OFF");
+            break;
 
         default:
             break;
@@ -141,27 +168,8 @@ static void OnCharacteristicSet(Property *property)
 
         // on
         case 9:
-            {
-                GPIO_ConfigTypeDef cfg;
-                cfg.GPIO_IntrType = GPIO_PIN_INTR_DISABLE;
-                cfg.GPIO_Mode = GPIO_Mode_Output;
-                cfg.GPIO_Pin = LED_IO_PIN;
-                cfg.GPIO_Pullup = GPIO_PullUp_DIS;
-                gpio_config(&cfg);
-
-                // property->data.value.boolValue.value;
-                if (property->data.value.boolValue.value)
-                {
-                    printf("[ TURN ON ] \n");
-                    GPIO_OUTPUT_SET(LED_IO_NUM, 1);
-                }
-                else
-                {
-                    printf("[ TURN OFF ]\n");
-                    GPIO_OUTPUT_SET(LED_IO_NUM, 0);
-                }
-                break;
-            }
+            set_gpio(property->data.value.boolValue.value ? 1 : 0);
+            break;
 
         default:
             break;
@@ -255,7 +263,7 @@ static void MyAccessoryInitializer(DeviceConfig *thiz, void *ctx)
     }
 
     DeviceConfig_SetPort(thiz, 9090);
-    DeviceConfig_SetName(thiz, "OOO");
+    DeviceConfig_SetName(thiz, "Hello");
     DeviceConfig_SetModelName(thiz, "light");
     DeviceConfig_SetConfigurationNumber(thiz, 2);
     DeviceConfig_SetCurrentStateNumber(thiz, 1);
@@ -321,13 +329,28 @@ static void _start_accessory(void *pvParameters)
 ICACHE_FLASH_ATTR
 static void wifi_event_handler_cb(System_Event_t * event)
 {
+    static int retry = 0;
+
     if (event == NULL)
     {
         return;
     }
 
+    printf("event: %d\n", event->event_id);
+
     switch (event->event_id)
     {
+        case EVENT_STAMODE_DISCONNECTED:
+            if (retry > 3)
+            {
+                hap_wdc_init();
+            }
+            else
+            {
+                retry ++;
+            }
+            break;
+
         case EVENT_STAMODE_GOT_IP:
             printf("free heap size %d line %d \n", system_get_free_heap_size(), __LINE__);
             xTaskCreate(_start_accessory, "start_accessory", 1024 * 3, NULL, 4, NULL);
@@ -355,8 +378,8 @@ static void wifi_config(void *pvParameters)
 
     memset(&sta_config, 0, sizeof(struct station_config));
     wifi_set_opmode(STATION_MODE);
-    memcpy(sta_config.ssid, DEMO_WIFI_SSID, strlen(DEMO_WIFI_SSID));
-    memcpy(sta_config.password, DEMO_WIFI_PASSWORD, strlen(DEMO_WIFI_PASSWORD));
+    memcpy(sta_config.ssid, wdcInfo.ssid, strlen(wdcInfo.ssid));
+    memcpy(sta_config.password, wdcInfo.password, strlen(wdcInfo.password));
     wifi_station_set_config(&sta_config);
 
     wifi_station_disconnect();
@@ -423,25 +446,21 @@ void user_init(void)
 {
     printf("SDK version:%s\n", system_get_sdk_version());
 
-#if 1
     /**
      * 读取参数
-     *   1. 如果有AP信息, 开始连接AP. 如果连接3次失败, 则进入AP模式.
+     *   1. 如果有AP信息, 开始连接AP. 如果连接失败, 则进入AP模式.
      *   2. 如果没有AP, 进入AP模式. 如果收到配置请求, 写入AP信息后重启.
      */
-    wifi_set_event_handler_cb(wifi_event_handler_cb);
-    xTaskCreate(wifi_config, "wfcf", 512, NULL, 4, NULL);
-#else 
-    user_esp_platform_load_param();
-
-    if (read_ap_configuration())
+    if (WdcInfo_Read(&wdcInfo))
     {
+        printf("ssid: %s\n", wdcInfo.ssid);
+        printf("password: %s\n", wdcInfo.password);
+
         wifi_set_event_handler_cb(wifi_event_handler_cb);
-        xTaskCreate(wifi_config, "wfcf", 512, NULL, 4, NULL);
+        xTaskCreate(wifi_config, "wifi", 512, NULL, 4, NULL);
     }
     else
     {
-        hap_wac_init();
+        hap_wdc_init();
     }
-#endif
 }
