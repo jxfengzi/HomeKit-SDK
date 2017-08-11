@@ -1,57 +1,23 @@
-apply plugin: 'com.android.application'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
-    defaultConfig {
-        applicationId "cc.arrizo.wdc"
-        minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+buildscript {
+    repositories {
+        jcenter()
     }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/INDEX.LIST'
-        exclude 'META-INF/io.netty.versions.properties'
-//        exclude 'META-INF/DEPENDENCIES.txt'
-//        exclude 'META-INF/LICENSE.txt'
-//        exclude 'META-INF/NOTICE.txt'
-//        exclude 'META-INF/NOTICE'
-//        exclude 'META-INF/LICENSE'
-//        exclude 'META-INF/DEPENDENCIES'
-//        exclude 'META-INF/notice.txt'
-//        exclude 'META-INF/license.txt'
-//        exclude 'META-INF/dependencies.txt'
-//        exclude 'META-INF/LGPL2.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(path: ':RxWifi')
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
 
-    /**
-     * netty
-     */
-    compile 'io.netty:netty-buffer:4.1.14.Final'
-    compile 'io.netty:netty-codec:4.1.14.Final'
-    compile 'io.netty:netty-codec-http:4.1.14.Final'
-    compile 'io.netty:netty-common:4.1.14.Final'
-    compile 'io.netty:netty-handler:4.1.14.Final'
-    compile 'io.netty:netty-transport:4.1.14.Final'
-    compile 'io.reactivex:rxnetty-http:0.5.2'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
