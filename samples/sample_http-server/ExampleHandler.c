@@ -19,7 +19,7 @@
 static TinyRet ExampleHandler_Construct(ChannelHandler *thiz);
 static TinyRet ExampleHandler_Dispose(ChannelHandler *thiz);
 static void ExampleHandler_Delete(ChannelHandler *thiz);
-static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, void *data, uint32_t len);
+static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len);
 static void _channelEvent(ChannelHandler *thiz, Channel *channel, void *event);
 
 ChannelHandler * ExampleHandler(void)
@@ -79,7 +79,7 @@ static TinyRet ExampleHandler_Dispose(ChannelHandler *thiz)
     return TINY_RET_OK;
 }
 
-static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, void *data, uint32_t len)
+static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len)
 {
     HttpMessage *request = (HttpMessage *)data;
     HttpMessage response;

@@ -31,7 +31,6 @@ typedef TinyRet (* HapPersistence_LoadLTPK)(EntityIdentifier *id, ED25519PublicK
 typedef uint32_t (* HapPersistence_GetLTPKCount)(void);
 typedef TinyRet (* HapPersistence_LoadLTPKAt)(int index, EntityIdentifier *id, ED25519PublicKey *LTPK);
 
-
 typedef struct _HapPersistence
 {
     HapPersistence_Initialize           Initialize;

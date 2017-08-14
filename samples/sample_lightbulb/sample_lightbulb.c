@@ -136,7 +136,7 @@ static void MyConfigurationInitializer(DeviceConfig *thiz, void *ctx)
     DeviceConfig_SetCurrentStateNumber(thiz, 1);
     DeviceConfig_SetFeatureFlags(thiz, 0);
     DeviceConfig_SetCategoryIdentifier(thiz, ACCESSORY_CATEGORY_OTHER);
-    DeviceConfig_SetPinCode(thiz, "031-45-154");
+    DeviceConfig_SetPinCode(thiz, "031-45-154", NULL);
 }
 
 static TinyRet _start(void)

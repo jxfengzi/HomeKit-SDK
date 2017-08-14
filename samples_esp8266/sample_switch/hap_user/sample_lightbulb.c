@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static WdcInfo wdcInfo;
+static WdcInfo *wdcInfo = NULL;
 
 ICACHE_FLASH_ATTR
 void tiny_print_mem_info(const char *tag, const char *function)
@@ -352,6 +352,8 @@ static void wifi_event_handler_cb(System_Event_t * event)
             break;
 
         case EVENT_STAMODE_GOT_IP:
+            free(wdcInfo);
+            wdcInfo = NULL;
             printf("free heap size %d line %d \n", system_get_free_heap_size(), __LINE__);
             xTaskCreate(_start_accessory, "start_accessory", 1024 * 3, NULL, 4, NULL);
             break;
@@ -378,8 +380,8 @@ static void wifi_config(void *pvParameters)
 
     memset(&sta_config, 0, sizeof(struct station_config));
     wifi_set_opmode(STATION_MODE);
-    memcpy(sta_config.ssid, wdcInfo.ssid, strlen(wdcInfo.ssid));
-    memcpy(sta_config.password, wdcInfo.password, strlen(wdcInfo.password));
+    memcpy(sta_config.ssid, wdcInfo->ssid, strlen(wdcInfo->ssid));
+    memcpy(sta_config.password, wdcInfo->password, strlen(wdcInfo->password));
     wifi_station_set_config(&sta_config);
 
     wifi_station_disconnect();
@@ -451,10 +453,12 @@ void user_init(void)
      *   1. 如果有AP信息, 开始连接AP. 如果连接失败, 则进入AP模式.
      *   2. 如果没有AP, 进入AP模式. 如果收到配置请求, 写入AP信息后重启.
      */
-    if (WdcInfo_Read(&wdcInfo))
+    wdcInfo = (WdcInfo *)malloc(sizeof(WdcInfo));
+
+    if (WdcInfo_Read(wdcInfo))
     {
-        printf("ssid: %s\n", wdcInfo.ssid);
-        printf("password: %s\n", wdcInfo.password);
+        printf("ssid: %s\n", wdcInfo->ssid);
+        printf("password: %s\n", wdcInfo->password);
 
         wifi_set_event_handler_cb(wifi_event_handler_cb);
         xTaskCreate(wifi_config, "wifi", 512, NULL, 4, NULL);
