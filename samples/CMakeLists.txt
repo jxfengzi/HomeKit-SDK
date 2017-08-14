@@ -51,7 +51,8 @@ INCLUDE_DIRECTORIES(${SOURCE_ROOT}/HapAccessory)
 # link dir
 #
 #---------------------------------------------------------------------------------------
-LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../lib/linux-x86_64)
+#LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../lib/linux-x86_64)
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../lib/linux-pi)
 
 #---------------------------------------------------------------------------------------
 #
