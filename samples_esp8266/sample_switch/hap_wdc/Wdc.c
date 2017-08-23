@@ -6,8 +6,6 @@
 #include <bootstrap/Bootstrap.h>
 #include <channel/stream/StreamServerChannelContext.h>
 
-//#define SOFT_AP_SSID      "HomeKit"
-
 ICACHE_FLASH_ATTR
 static void HttpServerInitializer(Channel *channel, void *ctx)
 {
@@ -111,6 +109,7 @@ static void start_wdc_server(void *args)
     Bootstrap_Dispose(&sb);
 }
 
+ICACHE_FLASH_ATTR
 static void wifi_handle_event_cb(System_Event_t *evt)
 {
     printf("event %x\n", evt->event_id);
@@ -150,7 +149,6 @@ ICACHE_FLASH_ATTR
 static void soft_ap_init(void)
 {
     char ssid[32];
-
     char mac[6];
 
     memset(ssid, 0, 32);
@@ -195,9 +193,9 @@ static void soft_ap_init(void)
     wifi_softap_dhcps_start(); // enable soft-AP DHCP server
 }
 
+ICACHE_FLASH_ATTR
 void hap_wdc_init()
 {
     soft_ap_init();
-
     xTaskCreate(start_wdc_server, "start_wdc_server", 1024 * 3, NULL, 4, NULL);
 }

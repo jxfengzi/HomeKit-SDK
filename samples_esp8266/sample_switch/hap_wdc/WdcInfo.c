@@ -17,6 +17,7 @@
 #define PRIV_PARAM_START_SEC        0x180
 #define PRIV_PARAM_SAVE             0
 
+ICACHE_FLASH_ATTR
 static uint32_t compute_checksum(WdcInfo *thiz)
 {
     uint32_t checksum = 0;

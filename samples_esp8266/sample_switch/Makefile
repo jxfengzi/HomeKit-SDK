@@ -51,7 +51,7 @@ endif
 COMPONENTS_eagle.app.v6 = \
 	hap_accessory/libhap_accessory.a        \
 	hap_persistence/libhap_persistence.a    \
-	hap_wdc/libhap_wdc.a                    \
+    hap_wdc/libhap_wdc.a                    \
 	hap_user/libhap_user.a                  
 
 LINKFLAGS_eagle.app.v6 = \

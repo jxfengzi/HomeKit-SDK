@@ -22,6 +22,7 @@ TINY_BEGIN_DECLS
 
 #define WdcHandler_Name "WdcHandler"
 
+ICACHE_FLASH_ATTR
 ChannelHandler * WdcHandler(void);
 
 
