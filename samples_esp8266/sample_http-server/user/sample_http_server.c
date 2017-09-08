@@ -17,6 +17,13 @@
 #define DEMO_WIFI_PASSWORD  "milink123"
 
 ICACHE_FLASH_ATTR
+void tiny_print_mem_info(const char *tag, const char *function)
+{
+    printf("[%s/%s] stack = %d, free heap size: %d\n", tag, function,
+      uxTaskGetStackHighWaterMark(NULL), system_get_free_heap_size());
+}
+
+ICACHE_FLASH_ATTR
 static void HttpServerInitializer(Channel *channel, void *ctx)
 {
     printf("HttpServerInitializer: %s\n", channel->id);

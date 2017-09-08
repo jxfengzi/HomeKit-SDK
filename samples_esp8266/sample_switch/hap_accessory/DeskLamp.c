@@ -12,6 +12,7 @@
 
 #include "hap/accessories/DeskLamp.h"
 #include "hap/services/Lightbulb.h"
+#include "AccessoryInformation.h"
 
 TINY_LOR
 Accessory * DeskLamp(PropertyOnGet onGet, PropertyOnSet onSet)
@@ -19,6 +20,7 @@ Accessory * DeskLamp(PropertyOnGet onGet, PropertyOnSet onSet)
     Accessory * thiz = Accessory_New();
     if (thiz != NULL)
     {
+        TinyList_AddTail(&thiz->services, AccessoryInformation(onGet, onSet));
         TinyList_AddTail(&thiz->services, Lightbulb(onGet, onSet));
     }
 

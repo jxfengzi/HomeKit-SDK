@@ -80,7 +80,8 @@ LINKFLAGS_eagle.app.v6 = \
 	-lssl	\
 	-lwpa	\
 	-lwps		\
-    -lhomekit   \
+    -ltiny_static \
+    -ltinymdns_static \
 	$(DEP_LIBS_eagle.app.v6)					\
 	-Wl,--end-group
 
@@ -126,27 +127,11 @@ DDEFINES +=				\
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include               \
-    -I $(PDIR)../../include/homekit/HapAccessory        \
-    -I $(PDIR)../../include/homekit/HapSupport          \
-    -I $(PDIR)../../include/homekit/IotCrypto           \
-    -I $(PDIR)../../include/homekit/IotThingManager     \
-    -I $(PDIR)../../include/homekit/IotTypedef          \
-    -I $(PDIR)../../include/homekit/MdnsRegistry        \
-    -I $(PDIR)../../include/homekit/Netty               \
-    -I $(PDIR)../../include/homekit/TinyBase            \
-    -I $(PDIR)../../include/homekit/TinyContainer       \
-    -I $(PDIR)../../include/homekit/TinyPortable
-
-# INCLUDES := $(INCLUDES) -I $(PDIR)include               \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/HapAccessory        \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/HapSupport          \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotCrypto           \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotThingManager     \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/IotTypedef          \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/Netty               \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyBase            \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyContainer       \
-# 	    -I /home/ouyang/extdisk/github.ouyang/iot/sdk/c/source/src/TinyPortable
+    -I $(PDIR)../../include/tinymdns/TinyMDNS           \
+    -I $(PDIR)../../include/tiny/Netty                  \
+    -I $(PDIR)../../include/tiny/TinyBase               \
+    -I $(PDIR)../../include/tiny/TinyContainer          \
+    -I $(PDIR)../../include/tiny/TinyPortable
 
 sinclude $(SDK_PATH)/Makefile
 

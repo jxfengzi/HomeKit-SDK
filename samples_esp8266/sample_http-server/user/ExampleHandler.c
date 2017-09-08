@@ -29,10 +29,10 @@ ICACHE_FLASH_ATTR
 static void ExampleHandler_Delete(ChannelHandler *thiz);
 
 ICACHE_FLASH_ATTR
-static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, void *data, uint32_t len);
+static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len);
 
 ICACHE_FLASH_ATTR
-static void _channelEvent(ChannelHandler *thiz, Channel *channel, void *event);
+static void _channelEvent(ChannelHandler *thiz, Channel *channel, ChannelTimer *timer);
 
 ICACHE_FLASH_ATTR
 ChannelHandler * ExampleHandler(void)
@@ -96,7 +96,7 @@ static TinyRet ExampleHandler_Dispose(ChannelHandler *thiz)
 }
 
 ICACHE_FLASH_ATTR
-static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, void *data, uint32_t len)
+static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len)
 {
     HttpMessage *request = (HttpMessage *)data;
 
@@ -134,7 +134,7 @@ static bool _channelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType
 }
 
 ICACHE_FLASH_ATTR
-static void _channelEvent(ChannelHandler *thiz, Channel *channel, void *event)
+static void _channelEvent(ChannelHandler *thiz, Channel *channel, ChannelTimer *timer)
 {
     printf("_channelEvent: %s\n", channel->id);
 

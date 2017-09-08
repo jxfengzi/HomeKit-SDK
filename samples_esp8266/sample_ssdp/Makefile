@@ -80,7 +80,7 @@ LINKFLAGS_eagle.app.v6 = \
 	-lssl	\
 	-lwpa	\
 	-lwps		\
-    -lhomekit   \
+    -ltiny_static \
 	$(DEP_LIBS_eagle.app.v6)					\
 	-Wl,--end-group
 
@@ -126,15 +126,10 @@ DDEFINES +=				\
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include               \
-    -I $(PDIR)../../include/homekit/HapAccessory        \
-    -I $(PDIR)../../include/homekit/HapSupport          \
-    -I $(PDIR)../../include/homekit/IotCrypto           \
-    -I $(PDIR)../../include/homekit/IotThingManager     \
-    -I $(PDIR)../../include/homekit/IotTypedef          \
-    -I $(PDIR)../../include/homekit/Netty               \
-    -I $(PDIR)../../include/homekit/TinyBase            \
-    -I $(PDIR)../../include/homekit/TinyContainer       \
-    -I $(PDIR)../../include/homekit/TinyPortable
+    -I $(PDIR)../../include/tiny/Netty                  \
+    -I $(PDIR)../../include/tiny/TinyBase               \
+    -I $(PDIR)../../include/tiny/TinyContainer          \
+    -I $(PDIR)../../include/tiny/TinyPortable
 
 sinclude $(SDK_PATH)/Makefile
 

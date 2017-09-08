@@ -53,11 +53,10 @@
 // }
 
 ICACHE_FLASH_ATTR
-void tiny_print_stack_info(const char *tag, const char *function)
+void tiny_print_mem_info(const char *tag, const char *function)
 {
-    unsigned portBASE_TYPE uxHighWaterMark;
-    uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
-    printf("[%s/%s] stack = %d]\n", tag, function, uxHighWaterMark);
+    printf("[%s/%s] stack = %d, free heap size: %d\n", tag, function,
+      uxTaskGetStackHighWaterMark(NULL), system_get_free_heap_size());
 }
 
 ICACHE_FLASH_ATTR
@@ -81,7 +80,7 @@ static void _start_registry(void *pvParameters)
     ServiceInfo info;
     uint16_t port = 8080;
 
-    tiny_print_stack_info("registry", "_start_registry");
+    tiny_print_mem_info("registry", "_start_registry");
 
     ServiceInfo_Construct(&info);
     ServiceInfo_Initialize(&info, "hello", SERVICE_TYPE_HAP, "10.0.1.47", 8080);

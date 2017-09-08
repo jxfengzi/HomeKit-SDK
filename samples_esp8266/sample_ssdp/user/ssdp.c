@@ -17,6 +17,13 @@
 #define DEMO_WIFI_SSID      "airport-milink"
 #define DEMO_WIFI_PASSWORD  "milink123"
 
+ICACHE_FLASH_ATTR
+void tiny_print_mem_info(const char *tag, const char *function)
+{
+    printf("[%s/%s] stack = %d, free heap size: %d\n", tag, function,
+      uxTaskGetStackHighWaterMark(NULL), system_get_free_heap_size());
+}
+
 static void SsdpInitializer(Channel *channel, void *ctx)
 {
     printf("SsdpInitializer\n");
@@ -42,7 +49,7 @@ static void ssdp_task(void *pvParameters)
 
     MulticastChannel_Initialize(ssdp, SsdpInitializer, NULL);
 
-    if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.25", "239.255.255.250", 1900)))
+    if (RET_FAILED(MulticastChannel_Join(ssdp, "10.0.1.25", "239.255.255.250", 1900, false)))
     {
         printf("MulticastChannel_Join failed\n");
         //return;

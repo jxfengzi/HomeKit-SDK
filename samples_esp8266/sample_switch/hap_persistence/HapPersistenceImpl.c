@@ -157,7 +157,6 @@ static TinyRet Storage_LoadLTPK(EntityIdentifier *id, ED25519PublicKey *LTPK)
     ControllerInfo info;
 
     printf("Storage_LoadLTPK: %s\n", id->value);
-    printf("id: %s\n", info.id);
 
     if (! ControllerInfo_Read(&info))
     {

@@ -88,7 +88,8 @@ static void OnIdentify(void)
     printf("OnIdentify\n");
 }
 
-// GPIO12
+//#define PW
+
 #ifdef PW
 #define LED_IO_NUM   12
 #define LED_IO_PIN   GPIO_Pin_12
@@ -347,7 +348,7 @@ static void wifi_event_handler_cb(System_Event_t * event)
             free(wdcInfo);
             wdcInfo = NULL;
             printf("free heap size %d line %d \n", system_get_free_heap_size(), __LINE__);
-            xTaskCreate(_start_accessory, "start_accessory", 1024 * 3, NULL, 4, NULL);
+            xTaskCreate(_start_accessory, "start_accessory", 2048 + 512, NULL, 4, NULL);
             break;
 
         default:
